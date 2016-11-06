@@ -1,29 +1,86 @@
 'use strict';
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import {commands, window, ExtensionContext, Selection} from 'vscode';
+let paredit = require('paredit.js');
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: ExtensionContext) {
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "code-paredit" is now active!');
+    let navigate = (fn) => {
+        return () => {
+            let editor = window.activeTextEditor;
+            if (!editor) return;
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
+            let doc = editor.document;
+            if (doc.languageId !== "clojure") return;
 
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
-    });
+            let src = doc.getText();
+            let ast = paredit.parse(src);
 
-    context.subscriptions.push(disposable);
+            let cur = editor.selection.active;
+            let idx = doc.offsetAt(cur);
+            
+            let ind = fn(ast, idx);
+            let pos = doc.positionAt(ind);
+
+            editor.selection = new Selection(pos, pos);
+        }
+    }
+
+    context.subscriptions.push(
+        commands.registerCommand('paredit.forwardSexp',     navigate(paredit.navigator.forwardSexp)),
+        commands.registerCommand('paredit.forwardDownSexp', navigate(paredit.navigator.forwardDownSexp)),
+        commands.registerCommand('paredit.backwardSexp',    navigate(paredit.navigator.backwardSexp)),
+        commands.registerCommand('paredit.backwardUpSexp',  navigate(paredit.navigator.backwardUpSexp)),
+
+        commands.registerCommand('paredit.rangeForDefun', () => {
+            window.showInformationMessage('TODO: rangeForDefun');
+        }),
+        commands.registerCommand('paredit.sexpRangeExpansion', () => {
+            window.showInformationMessage('TODO: sexpRangeExpansion');
+        }),
+        commands.registerCommand('paredit.sexpsAt', () => {
+            window.showInformationMessage('TODO: sexpsAt');
+        }),
+        commands.registerCommand('paredit.containingSexpsAt', () => {
+            window.showInformationMessage('TODO: containingSexpsAt');
+        }),
+        commands.registerCommand('paredit.nextSexp', () => {
+            window.showInformationMessage('TODO: nextSexp');
+        }),
+        commands.registerCommand('paredit.prevSexp', () => {
+            window.showInformationMessage('TODO: prevSexp');
+        }),
+
+        commands.registerCommand('paredit.wrapAround', () => {
+            window.showInformationMessage('TODO: wrapAround');
+        }),
+        commands.registerCommand('paredit.barfSexp', () => {
+            window.showInformationMessage('TODO: barfSexp');
+        }),
+        commands.registerCommand('paredit.closeAndNewline', () => {
+            window.showInformationMessage('TODO: closeAndNewline');
+        }),
+        commands.registerCommand('paredit.delete', () => {
+            window.showInformationMessage('TODO: delete');
+        }),
+        commands.registerCommand('paredit.indentRange', () => {
+            window.showInformationMessage('TODO: indentRange');
+        }),
+        commands.registerCommand('paredit.killSexp', () => {
+            window.showInformationMessage('TODO: killSexp');
+        }),
+        commands.registerCommand('paredit.rewrite', () => {
+            window.showInformationMessage('TODO: rewrite');
+        }),
+        commands.registerCommand('paredit.slurpSexp', () => {
+            window.showInformationMessage('TODO: slurpSexp');
+        }),
+        commands.registerCommand('paredit.spliceSexp', () => {
+            window.showInformationMessage('TODO: spliceSexp');
+        }),
+        commands.registerCommand('paredit.splitSexp', () => {
+            window.showInformationMessage('TODO: splitSexp');
+        }));
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {
 }

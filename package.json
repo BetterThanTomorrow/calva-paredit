@@ -1,29 +1,167 @@
 {
     "name": "code-paredit",
-    "displayName": "code-paredit",
-    "description": "",
+    "displayName": "Paredit",
+    "description": "Paredit for VS Code",
     "version": "0.0.1",
-    "publisher": "gclapperton",
+    "publisher": "clptn",
+    "license": "MIT",
     "engines": {
         "vscode": "^1.5.0"
     },
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "clojure", "lisp", "scheme"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/clptn/code-paredit"
+    },
     "activationEvents": [
-        "onCommand:extension.sayHello"
+
+        "onLanguage:clojure",
+
+        "onCommand:paredit.forwardSexp",
+        "onCommand:paredit.forwardDownSexp",
+        "onCommand:paredit.backwardSexp",
+        "onCommand:paredit.backwardUpSexp",
+        "onCommand:paredit.rangeForDefun",
+        "onCommand:paredit.sexpRangeExpansion",
+        "onCommand:paredit.sexpsAt",
+        "onCommand:paredit.containingSexpsAt",
+        "onCommand:paredit.nextSexp",
+        "onCommand:paredit.prevSexp",
+
+        "onCommand:paredit.wrapAround",
+        "onCommand:paredit.barfSexp",
+        "onCommand:paredit.closeAndNewline",
+        "onCommand:paredit.delete",
+        "onCommand:paredit.indentRange",
+        "onCommand:paredit.killSexp",
+        "onCommand:paredit.rewrite",
+        "onCommand:paredit.slurpSexp",
+        "onCommand:paredit.spliceSexp",
+        "onCommand:paredit.splitSexp"
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }]
+        "commands": [
+            {
+                "command": "paredit.forwardSexp",
+                "title": "Paredit: Forward Sexp"
+            },
+                        {
+                "command": "paredit.backwardSexp",
+                "title": "Paredit: Backward Sexp"
+            },
+            {
+                "command": "paredit.forwardDownSexp",
+                "title": "Paredit: Down Sexp"
+            },
+            {
+                "command": "paredit.backwardUpSexp",
+                "title": "Paredit: Up Sexp"
+            },
+            {
+                "command": "paredit.rangeForDefun",
+                "title": "Paredit: Range For Defun"
+            },
+            {
+                "command": "paredit.sexpRangeExpansion",
+                "title": "Paredit: Sexp Range Expansion"
+            },
+            {
+                "command": "paredit.sexpsAt",
+                "title": "Paredit: Sexps At"
+            },
+            {
+                "command": "paredit.containingSexpsAt",
+                "title": "Paredit: Containing Sexps At"
+            },
+            {
+                "command": "paredit.nextSexp",
+                "title": "Paredit: Next Sexp"
+            },
+            {
+                "command": "paredit.prevSexp",
+                "title": "Paredit: Prev Sexp"
+            },
+
+            {
+                "command": "paredit.wrapAround",
+                "title": "Paredit: Wrap Around"
+            },
+            {
+                "command": "paredit.barfSexp",
+                "title": "Paredit: Barf Sexp"
+            },
+            {
+                "command": "paredit.closeAndNewline",
+                "title": "Paredit: Close And Newline"
+            },
+            {
+                "command": "paredit.delete",
+                "title": "Paredit: Delete"
+            },
+            {
+                "command": "paredit.indentRange",
+                "title": "Paredit: Indent Range"
+            },
+            {
+                "command": "paredit.killSexp",
+                "title": "Paredit: Kill Sexp"
+            },
+            {
+                "command": "paredit.rewrite",
+                "title": "Paredit: Rewrite"
+            },
+            {
+                "command": "paredit.slurpSexp",
+                "title": "Paredit: Slurp Sexp"
+            },
+            {
+                "command": "paredit.spliceSexp",
+                "title": "Paredit: Splice Sexp"
+            },
+            {
+                "command": "paredit.splitSexp",
+                "title": "Paredit: Split Sexp"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "paredit.forwardSexp",
+                "key": "ctrl+right",
+                "mac": "ctrl+right",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.forwardDownSexp",
+                "key": "ctrl+down",
+                "mac": "ctrl+down",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.backwardSexp",
+                "key": "ctrl+left",
+                "mac": "ctrl+left",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.backwardUpSexp",
+                "key": "ctrl+up",
+                "mac": "ctrl+up",
+                "when": "editorTextFocus"
+            }]
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
         "compile": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "dependencies": {
+        "paredit.js": "^0.2.13"
     },
     "devDependencies": {
         "typescript": "^2.0.3",
