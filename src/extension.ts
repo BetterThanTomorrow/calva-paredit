@@ -1,5 +1,5 @@
 'use strict';
-import {commands, window, ExtensionContext, Selection} from 'vscode';
+import {commands, window, ExtensionContext, Range, Selection} from 'vscode';
 let paredit = require('paredit.js');
 
 export function activate(context: ExtensionContext) {
@@ -22,6 +22,9 @@ export function activate(context: ExtensionContext) {
             let pos = doc.positionAt(ind);
 
             editor.selection = new Selection(pos, pos);
+
+            let rng = new Range(pos, pos);
+            editor.revealRange(rng);
         }
     }
 
