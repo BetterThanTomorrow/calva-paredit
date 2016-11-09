@@ -3,13 +3,15 @@ import {getSelection, scrollTo, select, edit} from './utils';
 import {commands, window, ExtensionContext} from 'vscode';
 let paredit = require('paredit.js');
 
+const languages = new Set(["clojure", "lisp", "scheme"]);
+
 function wrapPareditCommand(fn) {
     return () => {
         let editor = window.activeTextEditor;
         if (!editor) return;
 
         let doc = editor.document;
-        if (doc.languageId !== "clojure") return;
+        if (!languages.has(doc.languageId)) return;
 
         let src = editor.document.getText();
         let ast = paredit.parse(src);
