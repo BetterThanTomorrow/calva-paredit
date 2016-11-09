@@ -1,88 +1,75 @@
 'use strict';
-import {commands, window, ExtensionContext, Range, Selection} from 'vscode';
+import {getSelection, scrollTo, select, edit} from './utils';
+import {commands, window, ExtensionContext} from 'vscode';
 let paredit = require('paredit.js');
+
+function wrapPareditCommand(fn) {
+    return () => {
+        let editor = window.activeTextEditor;
+        if (!editor) return;
+
+        let doc = editor.document;
+        if (doc.languageId !== "clojure") return;
+
+        let src = editor.document.getText();
+        let ast = paredit.parse(src);
+        let sel = getSelection(editor);
+
+        let res = fn({'source': src, 'ast': ast, 'selection': sel});
+
+        if (typeof res === "number")
+            scrollTo(editor, res);
+        else if (res instanceof Array)
+            select(editor, res[0], res[1]);
+        else if (res instanceof Object)
+            edit(editor, res);
+        else return;
+    }
+}
+
+function registerPareditCommand(command, fn) {
+    return commands.registerCommand(command, wrapPareditCommand(fn));
+}
 
 export function activate(context: ExtensionContext) {
 
-    let navigate = (fn) => {
-        return () => {
-            let editor = window.activeTextEditor;
-            if (!editor) return;
+    let navigate = 
+        (fn, ...args) => ({ast, selection}) => fn(ast, selection.cursor, ...args);
+    let navigateRange = 
+        (fn, ...args) => ({ast, selection}) => fn(ast, selection.start, selection.end, ...args)
 
-            let doc = editor.document;
-            if (doc.languageId !== "clojure") return;
-
-            let src = doc.getText();
-            let ast = paredit.parse(src);
-
-            let cur = editor.selection.active;
-            let idx = doc.offsetAt(cur);
-            
-            let ind = fn(ast, idx);
-            let pos = doc.positionAt(ind);
-
-            editor.selection = new Selection(pos, pos);
-
-            let rng = new Range(pos, pos);
-            editor.revealRange(rng);
-        }
-    }
+    let edit = 
+        (fn, ...args) => ({ast, selection, source}) => fn(ast, source, selection.cursor, ...args);
+    let editRange = 
+        (fn, ...args) => ({ast, selection, source}) => fn(ast, source, selection.start, selection.end, ...args);
 
     context.subscriptions.push(
-        commands.registerCommand('paredit.forwardSexp',     navigate(paredit.navigator.forwardSexp)),
-        commands.registerCommand('paredit.forwardDownSexp', navigate(paredit.navigator.forwardDownSexp)),
-        commands.registerCommand('paredit.backwardSexp',    navigate(paredit.navigator.backwardSexp)),
-        commands.registerCommand('paredit.backwardUpSexp',  navigate(paredit.navigator.backwardUpSexp)),
 
-        commands.registerCommand('paredit.rangeForDefun', () => {
-            window.showInformationMessage('TODO: rangeForDefun');
-        }),
-        commands.registerCommand('paredit.sexpRangeExpansion', () => {
-            window.showInformationMessage('TODO: sexpRangeExpansion');
-        }),
-        commands.registerCommand('paredit.sexpsAt', () => {
-            window.showInformationMessage('TODO: sexpsAt');
-        }),
-        commands.registerCommand('paredit.containingSexpsAt', () => {
-            window.showInformationMessage('TODO: containingSexpsAt');
-        }),
-        commands.registerCommand('paredit.nextSexp', () => {
-            window.showInformationMessage('TODO: nextSexp');
-        }),
-        commands.registerCommand('paredit.prevSexp', () => {
-            window.showInformationMessage('TODO: prevSexp');
-        }),
-
-        commands.registerCommand('paredit.wrapAround', () => {
-            window.showInformationMessage('TODO: wrapAround');
-        }),
-        commands.registerCommand('paredit.barfSexp', () => {
-            window.showInformationMessage('TODO: barfSexp');
-        }),
-        commands.registerCommand('paredit.closeAndNewline', () => {
-            window.showInformationMessage('TODO: closeAndNewline');
-        }),
-        commands.registerCommand('paredit.delete', () => {
-            window.showInformationMessage('TODO: delete');
-        }),
-        commands.registerCommand('paredit.indentRange', () => {
-            window.showInformationMessage('TODO: indentRange');
-        }),
-        commands.registerCommand('paredit.killSexp', () => {
-            window.showInformationMessage('TODO: killSexp');
-        }),
-        commands.registerCommand('paredit.rewrite', () => {
-            window.showInformationMessage('TODO: rewrite');
-        }),
-        commands.registerCommand('paredit.slurpSexp', () => {
-            window.showInformationMessage('TODO: slurpSexp');
-        }),
-        commands.registerCommand('paredit.spliceSexp', () => {
-            window.showInformationMessage('TODO: spliceSexp');
-        }),
-        commands.registerCommand('paredit.splitSexp', () => {
-            window.showInformationMessage('TODO: splitSexp');
-        }));
+        // NAVIGATION
+        registerPareditCommand('paredit.forwardSexp',            navigate(paredit.navigator.forwardSexp)),
+        registerPareditCommand('paredit.backwardSexp',           navigate(paredit.navigator.backwardSexp)),
+        registerPareditCommand('paredit.forwardDownSexp',        navigate(paredit.navigator.forwardDownSexp)),
+        registerPareditCommand('paredit.backwardUpSexp',         navigate(paredit.navigator.backwardUpSexp)),
+        registerPareditCommand('paredit.sexpRangeExpansion',     navigateRange(paredit.navigator.sexpRangeExpansion)),
+        registerPareditCommand('paredit.closeList',              navigate(paredit.navigator.closeList)),
+        registerPareditCommand('paredit.rangeForDefun',          navigate(paredit.navigator.rangeForDefun)),
+        
+        // EDITING
+        registerPareditCommand('paredit.slurpSexpForward',       edit(paredit.editor.slurpSexp, {'backward': false})),
+        registerPareditCommand('paredit.slurpSexpBackward',      edit(paredit.editor.slurpSexp, {'backward': true})),
+        registerPareditCommand('paredit.barfSexpForward',        edit(paredit.editor.barfSexp, {'backward': false})),
+        registerPareditCommand('paredit.barfSexpBackward',       edit(paredit.editor.barfSexp, {'backward': true})),
+        registerPareditCommand('paredit.spliceSexp',             edit(paredit.editor.spliceSexp)),
+        registerPareditCommand('paredit.splitSexp',              edit(paredit.editor.splitSexp)),
+        registerPareditCommand('paredit.killSexpForward',        edit(paredit.editor.killSexp, {'backward': false})),
+        registerPareditCommand('paredit.killSexpBackward',       edit(paredit.editor.killSexp, {'backward': true})),
+        registerPareditCommand('paredit.spliceSexpKillForward',  edit(paredit.editor.spliceSexpKill, {'backward': false})),
+        registerPareditCommand('paredit.spliceSexpKillBackward', edit(paredit.editor.spliceSexpKill, {'backward': true})),
+        registerPareditCommand('paredit.wrapAroundParens',       edit(paredit.editor.wrapAround, '(', ')')),
+        registerPareditCommand('paredit.wrapAroundSquare',       edit(paredit.editor.wrapAround, '[', ']')),
+        registerPareditCommand('paredit.wrapAroundCurly',        edit(paredit.editor.wrapAround, '{', '}')),
+        registerPareditCommand('paredit.indentRange',            editRange(paredit.editor.indentRange)),
+        registerPareditCommand('paredit.transpose',              edit(paredit.editor.transpose)))
 }
 
 export function deactivate() {

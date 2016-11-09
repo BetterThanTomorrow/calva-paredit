@@ -23,26 +23,28 @@
         "onLanguage:clojure",
 
         "onCommand:paredit.forwardSexp",
-        "onCommand:paredit.forwardDownSexp",
         "onCommand:paredit.backwardSexp",
+        "onCommand:paredit.forwardDownSexp",
         "onCommand:paredit.backwardUpSexp",
-        "onCommand:paredit.rangeForDefun",
         "onCommand:paredit.sexpRangeExpansion",
-        "onCommand:paredit.sexpsAt",
-        "onCommand:paredit.containingSexpsAt",
-        "onCommand:paredit.nextSexp",
-        "onCommand:paredit.prevSexp",
+        "onCommand:paredit.closeList",
+        "onCommand:paredit.rangeForDefun",
 
-        "onCommand:paredit.wrapAround",
-        "onCommand:paredit.barfSexp",
-        "onCommand:paredit.closeAndNewline",
-        "onCommand:paredit.delete",
-        "onCommand:paredit.indentRange",
-        "onCommand:paredit.killSexp",
-        "onCommand:paredit.rewrite",
-        "onCommand:paredit.slurpSexp",
+        "onCommand:paredit.slurpSexpForward",
+        "onCommand:paredit.slurpSexpBackward",
+        "onCommand:paredit.barfSexpForward",
+        "onCommand:paredit.barfSexpBackward",
         "onCommand:paredit.spliceSexp",
-        "onCommand:paredit.splitSexp"
+        "onCommand:paredit.splitSexp",
+        "onCommand:paredit.killSexpForward",
+        "onCommand:paredit.killSexpBackward",
+        "onCommand:paredit.spliceSexpKillForward",
+        "onCommand:paredit.spliceSexpKillBackward",
+        "onCommand:paredit.wrapAroundParens",
+        "onCommand:paredit.wrapAroundSquare",
+        "onCommand:paredit.wrapAroundCurly",
+        "onCommand:paredit.indentRange",
+        "onCommand:paredit.transpose"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -51,7 +53,7 @@
                 "command": "paredit.forwardSexp",
                 "title": "Paredit: Forward Sexp"
             },
-                        {
+            {
                 "command": "paredit.backwardSexp",
                 "title": "Paredit: Backward Sexp"
             },
@@ -64,61 +66,33 @@
                 "title": "Paredit: Up Sexp"
             },
             {
-                "command": "paredit.rangeForDefun",
-                "title": "Paredit: Range For Defun"
-            },
-            {
                 "command": "paredit.sexpRangeExpansion",
                 "title": "Paredit: Sexp Range Expansion"
             },
             {
-                "command": "paredit.sexpsAt",
-                "title": "Paredit: Sexps At"
+                "command": "paredit.closeList",
+                "title": "Paredit: Close List"
             },
             {
-                "command": "paredit.containingSexpsAt",
-                "title": "Paredit: Containing Sexps At"
-            },
-            {
-                "command": "paredit.nextSexp",
-                "title": "Paredit: Next Sexp"
-            },
-            {
-                "command": "paredit.prevSexp",
-                "title": "Paredit: Prev Sexp"
+                "command": "paredit.rangeForDefun",
+                "title": "Paredit: Range For Defn"
             },
 
             {
-                "command": "paredit.wrapAround",
-                "title": "Paredit: Wrap Around"
+                "command": "paredit.slurpSexpForward",
+                "title": "Paredit: Slurp Sexp Forward"
             },
             {
-                "command": "paredit.barfSexp",
+                "command": "paredit.slurpSexpBackward",
+                "title": "Paredit: Slurp Sexp Backward"
+            },
+            {
+                "command": "paredit.barfSexpForward",
                 "title": "Paredit: Barf Sexp"
             },
             {
-                "command": "paredit.closeAndNewline",
-                "title": "Paredit: Close And Newline"
-            },
-            {
-                "command": "paredit.delete",
-                "title": "Paredit: Delete"
-            },
-            {
-                "command": "paredit.indentRange",
-                "title": "Paredit: Indent Range"
-            },
-            {
-                "command": "paredit.killSexp",
-                "title": "Paredit: Kill Sexp"
-            },
-            {
-                "command": "paredit.rewrite",
-                "title": "Paredit: Rewrite"
-            },
-            {
-                "command": "paredit.slurpSexp",
-                "title": "Paredit: Slurp Sexp"
+                "command": "paredit.barfSexpBackward",
+                "title": "Paredit: Barf Sexp"
             },
             {
                 "command": "paredit.spliceSexp",
@@ -127,6 +101,42 @@
             {
                 "command": "paredit.splitSexp",
                 "title": "Paredit: Split Sexp"
+            },
+            {
+                "command": "paredit.killSexpForward",
+                "title": "Paredit: Kill Sexp Forward"
+            },
+            {
+                "command": "paredit.killSexpBackward",
+                "title": "Paredit: Kill Sexp Backward"
+            },
+            {
+                "command": "paredit.spliceSexpKillForward",
+                "title": "Paredit: Splice & Kill Forward"
+            },
+            {
+                "command": "paredit.spliceSexpKillBackward",
+                "title": "Paredit: Splice & Kill Backward"
+            },
+            {
+                "command": "paredit.wrapAroundParens",
+                "title": "Paredit: Wrap Around ()"
+            },
+            {
+                "command": "paredit.wrapAroundSquare",
+                "title": "Paredit: Wrap Around []"
+            },
+            {
+                "command": "paredit.wrapAroundCurly",
+                "title": "Paredit: Wrap Around {}"
+            },
+            {
+                "command": "paredit.indentRange",
+                "title": "Paredit: Indent"
+            },
+            {
+                "command": "paredit.transpose",
+                "title": "Paredit: Transpose"
             }
         ],
         "keybindings": [
@@ -137,15 +147,15 @@
                 "when": "editorTextFocus"
             },
             {
-                "command": "paredit.forwardDownSexp",
-                "key": "ctrl+down",
-                "mac": "ctrl+down",
-                "when": "editorTextFocus"
-            },
-            {
                 "command": "paredit.backwardSexp",
                 "key": "ctrl+left",
                 "mac": "ctrl+left",
+                "when": "editorTextFocus"
+            },       
+            {
+                "command": "paredit.forwardDownSexp",
+                "key": "ctrl+down",
+                "mac": "ctrl+down",
                 "when": "editorTextFocus"
             },
             {
@@ -153,7 +163,99 @@
                 "key": "ctrl+up",
                 "mac": "ctrl+up",
                 "when": "editorTextFocus"
-            }]
+            },
+            {  
+                "command": "paredit.sexpRangeExpansion",
+                "key": "ctrl+w",
+                "mac": "ctrl+w",
+                "when": "editorTextFocus"
+            },
+
+            {
+                "command": "paredit.slurpSexpForward",
+                "key": "ctrl+alt+.",
+                "mac": "ctrl+alt+.",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.slurpSexpBackward",
+                "key": "ctrl+alt+shift+.",
+                "mac": "ctrl+alt+shift+.",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.barfSexpForward",
+                "key": "ctrl+alt+,",
+                "mac": "ctrl+alt+,",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.barfSexpBackward",
+                "key": "ctrl+alt+shift+,",
+                "mac": "ctrl+alt+shift+,",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.spliceSexp",
+                "key": "ctrl+alt+s",
+                "mac": "ctrl+alt+s",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.splitSexp",
+                "key": "ctrl+alt+/",
+                "mac": "ctrl+alt+/",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.killSexpForward",
+                "key": "cmd+shift+backspace",
+                "mac": "cmd+shift+backspace",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.killSexpBackward",
+                "key": "cmd+backspace",
+                "mac": "cmd+backspace",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.spliceSexpKillForward",
+                "key": "ctrl+alt+up",
+                "mac": "ctrl+alt+up",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.spliceSexpKillBackward",
+                "key": "ctrl+alt+down",
+                "mac": "ctrl+alt+down",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.wrapAroundParens",
+                "key": "ctrl+alt+shift+9",
+                "mac": "ctrl+alt+shift+9",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.wrapAroundSquare",
+                "key": "ctrl+alt+[",
+                "mac": "ctrl+alt+[",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.wrapAroundCurly",
+                "key": "ctrl+alt+shift+[",
+                "mac": "ctrl+alt+shift+[",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.indentRange",
+                "key": "ctrl+alt+i",
+                "mac": "ctrl+alt+i",
+                "when": "editorTextFocus"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
