@@ -1,36 +1,34 @@
 'use strict';
-import {getSelection, scrollTo, select, edit} from './utils';
-import {commands, window, ExtensionContext} from 'vscode';
+import * as utils from './utils';
+import {commands, window, ExtensionContext, TextEditor, TextEditorEdit} from 'vscode';
 let paredit = require('paredit.js');
 
 const languages = new Set(["clojure", "lisp", "scheme"]);
 
 function wrapPareditCommand(fn) {
-    return () => {
-        let editor = window.activeTextEditor;
-        if (!editor) return;
+    return (textEditor: TextEditor, edit: TextEditorEdit) => {
 
-        let doc = editor.document;
+        let doc = textEditor.document;
         if (!languages.has(doc.languageId)) return;
 
-        let src = editor.document.getText();
+        let src = textEditor.document.getText();
         let ast = paredit.parse(src);
-        let sel = getSelection(editor);
+        let sel = utils.getSelection(textEditor);
 
         let res = fn({'source': src, 'ast': ast, 'selection': sel});
 
         if (typeof res === "number")
-            scrollTo(editor, res);
+            utils.scrollTo(textEditor, res);
         else if (res instanceof Array)
-            select(editor, res[0], res[1]);
+            utils.select(textEditor, res[0], res[1]);
         else if (res instanceof Object)
-            edit(editor, res);
+            utils.edit(textEditor, edit, res);
         else return;
     }
 }
 
-function registerPareditCommand(command, fn) {
-    return commands.registerCommand(command, wrapPareditCommand(fn));
+function registerPareditCommand(command: string, fn) {
+    return commands.registerTextEditorCommand(command, wrapPareditCommand(fn));
 }
 
 export function activate(context: ExtensionContext) {
