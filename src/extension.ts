@@ -1,15 +1,17 @@
 'use strict';
+import {StatusBar} from './status_bar';
 import * as utils from './utils';
 import {commands, window, ExtensionContext, TextEditor, TextEditorEdit} from 'vscode';
 let paredit = require('paredit.js');
 
 const languages = new Set(["clojure", "lisp", "scheme"]);
+let enabled = true;
 
 function wrapPareditCommand(fn) {
     return (textEditor: TextEditor, edit: TextEditorEdit) => {
 
         let doc = textEditor.document;
-        if (!languages.has(doc.languageId)) return;
+        if (!enabled || !languages.has(doc.languageId)) return;
 
         let src = textEditor.document.getText();
         let ast = paredit.parse(src);
@@ -43,7 +45,13 @@ export function activate(context: ExtensionContext) {
     let editRange = 
         (fn, ...args) => ({ast, selection, source}) => fn(ast, source, selection.start, selection.end, ...args);
 
+    let statusBar = new StatusBar();
+
     context.subscriptions.push(
+        
+        statusBar,
+        commands.registerCommand('paredit.toggle', () => {enabled = !enabled; statusBar.enabled = enabled;}),
+        window.onDidChangeActiveTextEditor((e) => statusBar.visible = languages.has(e.document.languageId)),
 
         // NAVIGATION
         registerPareditCommand('paredit.forwardSexp',            navigate(paredit.navigator.forwardSexp)),

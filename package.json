@@ -50,6 +50,11 @@
     "contributes": {
         "commands": [
             {
+                "command": "paredit.toggle",
+                "title": "Paredit: Toggle"
+            },
+
+            {
                 "command": "paredit.forwardSexp",
                 "title": "Paredit: Forward Sexp"
             },
