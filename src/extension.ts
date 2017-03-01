@@ -1,83 +1,101 @@
 'use strict';
 import {StatusBar} from './status_bar';
 import * as utils from './utils';
-import {commands, window, ExtensionContext, TextEditor, TextEditorEdit} from 'vscode';
+import {commands, window, ExtensionContext} from 'vscode';
 let paredit = require('paredit.js');
 
 const languages = new Set(["clojure", "lisp", "scheme"]);
 let enabled = true;
 
-function wrapPareditCommand(fn) {
-    return (textEditor: TextEditor, edit: TextEditorEdit) => {
+const navigate = (fn, ...args) =>
+    ({textEditor, ast, selection}) => {
+        let res = fn(ast, selection.cursor, ...args);
+        utils.select(textEditor, res);
+    }
+const navigateRange = (fn, ...args) =>
+    ({textEditor, ast, selection}) => {
+        let res = fn(ast, selection.start, selection.end, ...args);
+        utils.select(textEditor, res);
+    }
 
+function indent({textEditor, range}) {
+    let src = textEditor.document.getText(),
+        ast = paredit.parse(src),
+        res = paredit.editor.indentRange(ast, src, range.start, range.end);
+    utils.edit(textEditor, utils.commands(res));
+}
+
+const edit = (fn, ...args) =>
+    ({textEditor, src, ast, selection}) => {
+        let res = fn(ast, src, selection.cursor, ...args),
+            cmd = utils.commands(res),
+            sel = { start: Math.min(...cmd.map(c => c.start)),
+                    end:   Math.max(...cmd.map(utils.end)) };
+
+        utils
+        .edit(textEditor, cmd)
+        .then((applied?) => {
+            utils.select(textEditor, res.newIndex);
+            indent({ textEditor: textEditor,
+                     range:      sel })
+        });
+    }
+
+const pareditCommands : [[string, Function]] = [
+
+    // NAVIGATION
+    ['paredit.forwardSexp',            navigate(paredit.navigator.forwardSexp)],
+    ['paredit.backwardSexp',           navigate(paredit.navigator.backwardSexp)],
+    ['paredit.forwardDownSexp',        navigate(paredit.navigator.forwardDownSexp)],
+    ['paredit.backwardUpSexp',         navigate(paredit.navigator.backwardUpSexp)],
+    ['paredit.sexpRangeExpansion',     navigateRange(paredit.navigator.sexpRangeExpansion)],
+    ['paredit.closeList',              navigate(paredit.navigator.closeList)],
+    ['paredit.rangeForDefun',          navigate(paredit.navigator.rangeForDefun)],
+        
+    // EDITING
+    ['paredit.slurpSexpForward',       edit(paredit.editor.slurpSexp, {'backward': false})],
+    ['paredit.slurpSexpBackward',      edit(paredit.editor.slurpSexp, {'backward': true})],
+    ['paredit.barfSexpForward',        edit(paredit.editor.barfSexp, {'backward': false})],
+    ['paredit.barfSexpBackward',       edit(paredit.editor.barfSexp, {'backward': true})],
+    ['paredit.spliceSexp',             edit(paredit.editor.spliceSexp)],
+    ['paredit.splitSexp',              edit(paredit.editor.splitSexp)],
+    ['paredit.killSexpForward',        edit(paredit.editor.killSexp, {'backward': false})],
+    ['paredit.killSexpBackward',       edit(paredit.editor.killSexp, {'backward': true})],
+    ['paredit.spliceSexpKillForward',  edit(paredit.editor.spliceSexpKill, {'backward': false})],
+    ['paredit.spliceSexpKillBackward', edit(paredit.editor.spliceSexpKill, {'backward': true})],
+    ['paredit.wrapAroundParens',       edit(paredit.editor.wrapAround, '(', ')')],
+    ['paredit.wrapAroundSquare',       edit(paredit.editor.wrapAround, '[', ']')],
+    ['paredit.wrapAroundCurly',        edit(paredit.editor.wrapAround, '{', '}')],
+    ['paredit.indentRange',            indent],
+    ['paredit.transpose',              edit(paredit.editor.transpose)]];
+
+function wrapPareditCommand(fn) {
+    return () => {
+
+        let textEditor = window.activeTextEditor;
         let doc = textEditor.document;
         if (!enabled || !languages.has(doc.languageId)) return;
 
         let src = textEditor.document.getText();
-        let ast = paredit.parse(src);
-        let sel = utils.getSelection(textEditor);
-
-        let res = fn({'source': src, 'ast': ast, 'selection': sel});
-
-        if (typeof res === "number")
-            utils.scrollTo(textEditor, res);
-        else if (res instanceof Array)
-            utils.select(textEditor, res[0], res[1]);
-        else if (res instanceof Object)
-            utils.edit(textEditor, edit, res);
-        else return;
+        fn({ textEditor: textEditor,
+             src:        src,
+             ast:        paredit.parse(src),
+             selection:  utils.getSelection(textEditor) });
     }
-}
-
-function registerPareditCommand(command: string, fn) {
-    return commands.registerTextEditorCommand(command, wrapPareditCommand(fn));
 }
 
 export function activate(context: ExtensionContext) {
 
-    let navigate = 
-        (fn, ...args) => ({ast, selection}) => fn(ast, selection.cursor, ...args);
-    let navigateRange = 
-        (fn, ...args) => ({ast, selection}) => fn(ast, selection.start, selection.end, ...args)
-
-    let edit = 
-        (fn, ...args) => ({ast, selection, source}) => fn(ast, source, selection.cursor, ...args);
-    let editRange = 
-        (fn, ...args) => ({ast, selection, source}) => fn(ast, source, selection.start, selection.end, ...args);
-
     let statusBar = new StatusBar();
 
     context.subscriptions.push(
-        
+
         statusBar,
         commands.registerCommand('paredit.toggle', () => {enabled = !enabled; statusBar.enabled = enabled;}),
         window.onDidChangeActiveTextEditor((e) => statusBar.visible = languages.has(e.document.languageId)),
 
-        // NAVIGATION
-        registerPareditCommand('paredit.forwardSexp',            navigate(paredit.navigator.forwardSexp)),
-        registerPareditCommand('paredit.backwardSexp',           navigate(paredit.navigator.backwardSexp)),
-        registerPareditCommand('paredit.forwardDownSexp',        navigate(paredit.navigator.forwardDownSexp)),
-        registerPareditCommand('paredit.backwardUpSexp',         navigate(paredit.navigator.backwardUpSexp)),
-        registerPareditCommand('paredit.sexpRangeExpansion',     navigateRange(paredit.navigator.sexpRangeExpansion)),
-        registerPareditCommand('paredit.closeList',              navigate(paredit.navigator.closeList)),
-        registerPareditCommand('paredit.rangeForDefun',          navigate(paredit.navigator.rangeForDefun)),
-        
-        // EDITING
-        registerPareditCommand('paredit.slurpSexpForward',       edit(paredit.editor.slurpSexp, {'backward': false})),
-        registerPareditCommand('paredit.slurpSexpBackward',      edit(paredit.editor.slurpSexp, {'backward': true})),
-        registerPareditCommand('paredit.barfSexpForward',        edit(paredit.editor.barfSexp, {'backward': false})),
-        registerPareditCommand('paredit.barfSexpBackward',       edit(paredit.editor.barfSexp, {'backward': true})),
-        registerPareditCommand('paredit.spliceSexp',             edit(paredit.editor.spliceSexp)),
-        registerPareditCommand('paredit.splitSexp',              edit(paredit.editor.splitSexp)),
-        registerPareditCommand('paredit.killSexpForward',        edit(paredit.editor.killSexp, {'backward': false})),
-        registerPareditCommand('paredit.killSexpBackward',       edit(paredit.editor.killSexp, {'backward': true})),
-        registerPareditCommand('paredit.spliceSexpKillForward',  edit(paredit.editor.spliceSexpKill, {'backward': false})),
-        registerPareditCommand('paredit.spliceSexpKillBackward', edit(paredit.editor.spliceSexpKill, {'backward': true})),
-        registerPareditCommand('paredit.wrapAroundParens',       edit(paredit.editor.wrapAround, '(', ')')),
-        registerPareditCommand('paredit.wrapAroundSquare',       edit(paredit.editor.wrapAround, '[', ']')),
-        registerPareditCommand('paredit.wrapAroundCurly',        edit(paredit.editor.wrapAround, '{', '}')),
-        registerPareditCommand('paredit.indentRange',            editRange(paredit.editor.indentRange)),
-        registerPareditCommand('paredit.transpose',              edit(paredit.editor.transpose)))
+        ...pareditCommands
+           .map(([command, fn]) => commands.registerCommand(command, wrapPareditCommand(fn))));
 }
 
 export function deactivate() {

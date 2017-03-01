@@ -1,42 +1,72 @@
 'use strict';
-import {commands, window, TextEditor, TextEditorEdit, ExtensionContext, Range, Selection} from 'vscode';
+import {TextEditor, TextEditorEdit, Selection} from 'vscode';
+
+interface Insert {
+    kind:   "insert",
+    start:  number,
+    text:   string
+}
+
+interface Delete {
+    kind:   "delete",
+    start:  number,
+    length: number
+}
+
+type Command = Insert | Delete;
+
+function toCommand([command, start, arg]) : Command {
+    if (command === 'insert')
+        return { kind: command, start: start, text: arg };
+    else
+        return { kind: command, start: start, length: arg };
+}
+
+export const commands = (res) => res.changes.map(toCommand);
+
+export function end(command: Command) {
+    if (command.kind === 'insert')
+        return command.start + command.text.length
+    else
+        return command.start
+}
 
 export function getSelection (editor: TextEditor) {
-    return {"start":  editor.document.offsetAt(editor.selection.start),
-            "end":    editor.document.offsetAt(editor.selection.end),
-            "cursor": editor.document.offsetAt(editor.selection.active)};
+    return { start:  editor.document.offsetAt(editor.selection.start),
+             end:    editor.document.offsetAt(editor.selection.end),
+             cursor: editor.document.offsetAt(editor.selection.active) };
 }
 
-export function scrollTo (editor: TextEditor, index: number) {
-    let pos = editor.document.positionAt(index);
-    editor.selection = new Selection(pos, pos);
-    let rng = new Range(pos, pos);
-    editor.revealRange(rng);
+export function select (editor: TextEditor, pos: any) {
+    let start, end: number;
+
+    if (typeof pos === "number")
+        start = end = pos;
+    else if (pos instanceof Array)
+        start = pos[0], end = pos[1];
+
+    let pos1 = editor.document.positionAt(start),
+        pos2 = editor.document.positionAt(end),
+        sel  = new Selection(pos1, pos2);
+
+    editor.selection = sel;
+    editor.revealRange(sel);
 }
 
-export function select (editor: TextEditor, start: number, end: number) {
-    let pos1 = editor.document.positionAt(start);
-    let pos2 = editor.document.positionAt(end);
+export const handle = (editor: TextEditor, command: Command) =>
+    edit => {
+        let start = editor.document.positionAt(command.start);
 
-    editor.selection = new Selection(pos1, pos2);
-
-    let rng = new Range(pos1, pos2);
-    editor.revealRange(rng);
-}
-
-export function edit (editor: TextEditor, edit: TextEditorEdit, edits) {
-    for (let change of edits.changes) {
-
-        if (change[0] === 'insert') {
-            let pos = editor.document.positionAt(change[1]);
-            edit.insert(pos, change[2]);
-        }
+        if (command.kind === 'insert')
+            edit.insert(start, command.text);
         else {
-            let start = editor.document.positionAt(change[1]);
-            let end   = editor.document.positionAt(change[1] + change[2]);
-            edit.delete(new Range(start, end));
+            let end   = start.translate(0, command.length);
+            edit.delete(new Selection(start, end));
         }
-    };
+    }
 
-    scrollTo(editor, edits.newIndex);
-}
+export const edit = (editor: TextEditor, commands: [Command]) =>
+    commands
+    .reduce((prev, command) =>
+                prev.then((_) => editor.edit(handle(editor, command))),
+            Promise.resolve(true));
