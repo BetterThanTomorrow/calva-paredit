@@ -22,6 +22,7 @@ function indent({textEditor, range}) {
     let src = textEditor.document.getText(),
         ast = paredit.parse(src),
         res = paredit.editor.indentRange(ast, src, range.start, range.end);
+
     utils
     .edit(textEditor, utils.commands(res))
     .then((applied?) => utils.undoStop(textEditor));
@@ -29,18 +30,23 @@ function indent({textEditor, range}) {
 
 const edit = (fn, ...args) =>
     ({textEditor, src, ast, selection}) => {
-        let res = fn(ast, src, selection.cursor, ...args),
-            cmd = utils.commands(res),
-            sel = { start: Math.min(...cmd.map(c => c.start)),
-                    end:   Math.max(...cmd.map(utils.end)) };
+        let res = fn(ast, src, selection.cursor, ...args);
 
-        utils
-        .edit(textEditor, cmd)
-        .then((applied?) => {
-            utils.select(textEditor, res.newIndex);
-            indent({ textEditor: textEditor,
-                     range:      sel })
-        });
+        if (res)
+            if (res.changes.length > 0) {
+                let cmd = utils.commands(res),
+                    sel = { start: Math.min(...cmd.map(c => c.start)),
+                            end:   Math.max(...cmd.map(utils.end)) };
+
+                utils
+                .edit(textEditor, cmd)
+                .then((applied?) => {
+                    utils.select(textEditor, res.newIndex);
+                    indent({ textEditor: textEditor,
+                             range:      sel })});
+            }
+            else
+                utils.select(textEditor, res.newIndex);
     }
 
 const pareditCommands : [[string, Function]] = [
