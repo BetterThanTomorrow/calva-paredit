@@ -1,3 +1,14 @@
+## 0.1.1
+
+Features:
+- Ability to toggle paredit on and off
+
+Improvements:
+- Automatically indents after edits
+
+Fixes:
+- Indenting
+
 ## 0.1.0
 
 Added the following Navigation commands:
