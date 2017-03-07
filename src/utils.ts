@@ -68,5 +68,13 @@ export const handle = (editor: TextEditor, command: Command) =>
 export const edit = (editor: TextEditor, commands: [Command]) =>
     commands
     .reduce((prev, command) =>
-                prev.then((_) => editor.edit(handle(editor, command))),
+                prev.then((_) =>
+                    editor.edit(handle(editor, command),
+                                {undoStopAfter: false, undoStopBefore: false})),
             Promise.resolve(true));
+
+export function undoStop(editor: TextEditor) {
+    let pos = editor.document.positionAt(0);
+    editor.edit((edit) => edit.insert(pos, ""),
+                {undoStopAfter: true, undoStopBefore: false})
+}
