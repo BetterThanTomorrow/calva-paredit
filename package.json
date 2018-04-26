@@ -1,9 +1,9 @@
 {
-    "name": "code-paredit",
+    "name": "paredit",
     "displayName": "Paredit",
     "description": "Paredit for VS Code",
-    "version": "0.1.1",
-    "publisher": "clptn",
+    "version": "0.1.2",
+    "publisher": "cospaia",
     "license": "MIT",
     "engines": {
         "vscode": "^1.5.0"
@@ -12,16 +12,16 @@
         "Other"
     ],
     "keywords": [
-        "clojure", "lisp", "scheme"
+        "clojure",
+        "lisp",
+        "scheme"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/clptn/code-paredit"
+        "url": "https://github.com/PEZ/paredit-for-vscode"
     },
     "activationEvents": [
-
         "onLanguage:clojure",
-
         "onCommand:paredit.forwardSexp",
         "onCommand:paredit.backwardSexp",
         "onCommand:paredit.forwardDownSexp",
@@ -29,7 +29,6 @@
         "onCommand:paredit.sexpRangeExpansion",
         "onCommand:paredit.closeList",
         "onCommand:paredit.rangeForDefun",
-
         "onCommand:paredit.slurpSexpForward",
         "onCommand:paredit.slurpSexpBackward",
         "onCommand:paredit.barfSexpForward",
@@ -53,7 +52,6 @@
                 "command": "paredit.toggle",
                 "title": "Paredit: Toggle"
             },
-
             {
                 "command": "paredit.forwardSexp",
                 "title": "Paredit: Forward Sexp"
@@ -82,7 +80,6 @@
                 "command": "paredit.rangeForDefun",
                 "title": "Paredit: Range For Defn"
             },
-
             {
                 "command": "paredit.slurpSexpForward",
                 "title": "Paredit: Slurp Sexp Forward"
@@ -156,7 +153,7 @@
                 "key": "ctrl+left",
                 "mac": "ctrl+left",
                 "when": "editorTextFocus"
-            },       
+            },
             {
                 "command": "paredit.forwardDownSexp",
                 "key": "ctrl+down",
@@ -169,13 +166,12 @@
                 "mac": "ctrl+up",
                 "when": "editorTextFocus"
             },
-            {  
+            {
                 "command": "paredit.sexpRangeExpansion",
                 "key": "ctrl+w",
                 "mac": "ctrl+w",
                 "when": "editorTextFocus"
             },
-
             {
                 "command": "paredit.slurpSexpForward",
                 "key": "ctrl+alt+.",

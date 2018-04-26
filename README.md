@@ -1,8 +1,8 @@
 # code-paredit
 
-[Paredit](http://mumble.net/~campbell/emacs/paredit.el) for [VS Code](https://code.visualstudio.com) (a thin wrapper around [paredit.js](http://robert.kra.hn/projects/paredit-js))
+[Paredit](http://mumble.net/~campbell/emacs/paredit.el) for [Visual Studio Code](https://code.visualstudio.com) (a thin wrapper around [paredit.js](http://robert.kra.hn/projects/paredit-js))
 
-**Paredit**: provides structural editing and navigation for LISPs  
+**Paredit**: provides structural editing and navigation for LISPs
 
 Aiming for feature parity with Atom's [lisp-paredit](https://github.com/jonspalding/lisp-paredit)
 
