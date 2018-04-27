@@ -1,7 +1,9 @@
 'use strict';
 import { StatusBar } from './status_bar';
 import * as utils from './utils';
-import { commands, window, ExtensionContext } from 'vscode';
+import * as vscode from 'vscode';
+import { commands, window, ExtensionContext, WorkspaceEdit, TextEdit, Range } from 'vscode';
+
 let paredit = require('paredit.js');
 
 const languages = new Set(["clojure", "lisp", "scheme"]);
@@ -43,11 +45,25 @@ const edit = (fn, ...args) =>
                 utils
                     .edit(textEditor, cmd)
                     .then((applied?) => {
+                        let document = textEditor.document;
                         utils.select(textEditor, res.newIndex);
-                        indent({
-                            textEditor: textEditor,
-                            range: sel
-                        })
+                        if (languages.has(textEditor.document.languageId)) {
+                            indent({
+                                textEditor: textEditor,
+                                range: sel
+                            })
+                        } else {
+                            commands.executeCommand(
+                                'vscode.executeFormatRangeProvider',
+                                document.uri,
+                                new Range(document.positionAt(sel.start), document.positionAt(sel.end)),
+                                {}
+                            ).then((edits: [TextEdit]) => {
+                                let wsEdit = new WorkspaceEdit();
+                                wsEdit.set(document.uri, edits);
+                                vscode.workspace.applyEdit(wsEdit);
+                            });
+                        }
                     });
             }
             else
@@ -87,7 +103,7 @@ function wrapPareditCommand(fn) {
 
         let textEditor = window.activeTextEditor;
         let doc = textEditor.document;
-        if (!enabled || !languages.has(doc.languageId)) return;
+        if (!enabled) return;
 
         let src = textEditor.document.getText();
         fn({
