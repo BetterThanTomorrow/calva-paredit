@@ -43,6 +43,8 @@
     },
     "activationEvents": [
         "onLanguage:clojure",
+        "onLanguage:lisp",
+        "onLanguage:scheme",
         "onCommand:paredit.forwardSexp",
         "onCommand:paredit.backwardSexp",
         "onCommand:paredit.forwardDownSexp",
