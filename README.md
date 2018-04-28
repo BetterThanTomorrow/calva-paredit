@@ -6,7 +6,10 @@ This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for 
 
 Aiming for feature parity with Atom's [lisp-paredit](https://github.com/jonspalding/lisp-paredit)
 
-![Paredit icon](assets/paredit.png)
+<center>
+<img src="https://github.com/PEZ/paredit-for-vscode/raw/master/assets/paredit-300.png" title="Paredit icon"></img>
+</center>
+
 ## Commands
 
 ### Navigation
