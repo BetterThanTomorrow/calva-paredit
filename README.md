@@ -1,11 +1,11 @@
 # Paredit for Visual Studio Code
 
-This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for [VS Code](https://code.visualstudio.com). It is a thin wrapper around [paredit.js](http://robert.kra.hn/projects/paredit-js)
+This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for [VS Code](https://code.visualstudio.com). It is a thin wrapper around [paredit.js](http://robert.kra.hn/projects/paredit-js). You find it inside Code's extansion view and on it's [Visual Studio Marketplace page](https://marketplace.visualstudio.com/items?itemName=cospaia.paredit-revived).
 
 **Paredit**: provides structural editing and navigation for LISPs
 
 <p align="center">
-<img src="https://github.com/PEZ/paredit-for-vscode/raw/master/assets/paredit.png" title="Paredit icon"></img>
+<a href="https://marketplace.visualstudio.com/items?itemName=cospaia.paredit-revived"><img src="https://github.com/PEZ/paredit-for-vscode/raw/master/assets/paredit.png" title="Paredit icon"></img></a>
 </p>
 
 Inspired by Atom's [lisp-paredit](https://github.com/jonspalding/lisp-paredit)
