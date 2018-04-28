@@ -4,11 +4,11 @@ This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for 
 
 **Paredit**: provides structural editing and navigation for LISPs
 
-Aiming for feature parity with Atom's [lisp-paredit](https://github.com/jonspalding/lisp-paredit)
-
 <center>
-<img src="https://github.com/PEZ/paredit-for-vscode/raw/master/assets/paredit-300.png" title="Paredit icon"></img>
+<img src="https://github.com/PEZ/paredit-for-vscode/raw/master/assets/paredit-blue-bg-300.png" title="Paredit icon"></img>
 </center>
+
+Inspired by Atom's [lisp-paredit](https://github.com/jonspalding/lisp-paredit)
 
 ## Commands
 
@@ -29,20 +29,20 @@ ctrl+shift+w       | Expand Selection
 
 Default keybinding | Action
 ------------------ | ------
-ctrl+alt-.         | Slurp Forward
-ctrl+alt-<         | Slurp Backward
-ctrl+alt-,         | Barf Forward
-ctrl+alt->         | Barf Backward
-ctrl+alt-s         | Splice
-ctrl+alt-/         | Split Sexp
+ctrl+alt+.         | Slurp Forward
+ctrl+alt+<         | Slurp Backward
+ctrl+alt+,         | Barf Forward
+ctrl+alt+>         | Barf Backward
+ctrl+alt+s         | Splice
+ctrl+alt+/         | Split Sexp
 cmd-delete         | Kill Sexp Forward
 cmd-backspace      | Kill Sexp Backward
-ctrl+alt-down      | Splice & Kill Forward
-ctrl+alt-up        | Splice & Kill Backward
-ctrl+alt-(         | Wrap Around ()
-ctrl+alt-[         | Wrap Around []
-ctrl+alt-{         | Wrap Around {}
-ctrl+alt-i         | Indent
+ctrl+alt+down      | Splice & Kill Forward
+ctrl+alt+up        | Splice & Kill Backward
+ctrl+alt+(         | Wrap Around ()
+ctrl+alt+[         | Wrap Around []
+ctrl+alt+{         | Wrap Around {}
+ctrl+alt+i         | Indent
 ---                | Transpose
 
 ## Why are there two Paredit extensions?
