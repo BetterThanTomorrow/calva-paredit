@@ -21,7 +21,7 @@ ctrl+left          | Backward Sexp
 ctrl+down          | Forward Down Sexp
 ctrl+up            | Backward Up Sexp
 ctrl+w             | Expand Selection
-ctrl+shift+w       | Expand Selection
+ctrl+shift+w       | Shrink Selection
 ---                | Close List
 ---                | Select Defn
 
