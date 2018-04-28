@@ -1,20 +1,41 @@
 {
     "name": "paredit",
-    "displayName": "Paredit",
-    "description": "Paredit for VS Code",
+    "displayName": "Paredit for VS Code",
+    "description": "Provides structural editing and navigation for LISPs",
     "version": "0.1.2",
+    "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
     "engines": {
         "vscode": "^1.5.0"
     },
     "categories": [
+        "Languages",
+        "Formatters",
         "Other"
     ],
     "keywords": [
         "clojure",
         "lisp",
-        "scheme"
+        "scheme",
+        "brackets",
+        "paredit"
+    ],
+    "galleryBanner": {
+        "color": "#344D81",
+        "theme": "dark"
+    },
+    "badges": [
+        {
+            "url": "https://img.shields.io/badge/clojurians-editors-blue.svg?logo=slack",
+            "href": "https://clojurians.slack.com/messages/editors/",
+            "description": "Let's talk in the #editors channel on the Clojurians Slack"
+        },
+        {
+            "url": "https://img.shields.io/badge/vscode--dev--community-clojure-blue.svg?logo=slack",
+            "href": "https://vscode-dev-community.slack.com/messages/clojure/",
+            "description": "See you in the #clojure channel on the VS Code Dev Slack"
+        }
     ],
     "repository": {
         "type": "git",
@@ -50,100 +71,124 @@
     "contributes": {
         "commands": [
             {
+                "category": "Paredit",
                 "command": "paredit.toggle",
-                "title": "Paredit: Toggle"
+                "title": "Toggle"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.forwardSexp",
-                "title": "Paredit: Forward Sexp"
+                "title": "Forward Sexp"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.backwardSexp",
-                "title": "Paredit: Backward Sexp"
+                "title": "Backward Sexp"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.forwardDownSexp",
-                "title": "Paredit: Down Sexp"
+                "title": "Down Sexp"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.backwardUpSexp",
-                "title": "Paredit: Up Sexp"
+                "title": "Up Sexp"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.sexpRangeExpansion",
-                "title": "Paredit: Sexp Range Expansion"
+                "title": "Sexp Range Expansion"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.sexpRangeContraction",
-                "title": "Paredit: Sexp Range Contraction (Shrink Selection)"
+                "title": "Sexp Range Contraction (Shrink Selection)"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.closeList",
-                "title": "Paredit: Close List"
+                "title": "Close List"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.rangeForDefun",
-                "title": "Paredit: Range For Defn"
+                "title": "Range For Defn"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.slurpSexpForward",
-                "title": "Paredit: Slurp Sexp Forward"
+                "title": "Slurp Sexp Forward"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.slurpSexpBackward",
-                "title": "Paredit: Slurp Sexp Backward"
+                "title": "Slurp Sexp Backward"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.barfSexpForward",
-                "title": "Paredit: Barf Sexp"
+                "title": "Barf Sexp"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.barfSexpBackward",
-                "title": "Paredit: Barf Sexp"
+                "title": "Barf Sexp"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.spliceSexp",
-                "title": "Paredit: Splice Sexp"
+                "title": "Splice Sexp"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.splitSexp",
-                "title": "Paredit: Split Sexp"
+                "title": "Split Sexp"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.killSexpForward",
-                "title": "Paredit: Kill Sexp Forward"
+                "title": "Kill Sexp Forward"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.killSexpBackward",
-                "title": "Paredit: Kill Sexp Backward"
+                "title": "Kill Sexp Backward"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.spliceSexpKillForward",
-                "title": "Paredit: Splice & Kill Forward"
+                "title": "Splice & Kill Forward"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.spliceSexpKillBackward",
-                "title": "Paredit: Splice & Kill Backward"
+                "title": "Splice & Kill Backward"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.wrapAroundParens",
-                "title": "Paredit: Wrap Around ()"
+                "title": "Wrap Around ()"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.wrapAroundSquare",
-                "title": "Paredit: Wrap Around []"
+                "title": "Wrap Around []"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.wrapAroundCurly",
-                "title": "Paredit: Wrap Around {}"
+                "title": "Wrap Around {}"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.indentRange",
-                "title": "Paredit: Indent"
+                "title": "Indent"
             },
             {
+                "category": "Paredit",
                 "command": "paredit.transpose",
-                "title": "Paredit: Transpose"
+                "title": "Transpose"
             }
         ],
         "keybindings": [
