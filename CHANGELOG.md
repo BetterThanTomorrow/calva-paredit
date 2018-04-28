@@ -1,3 +1,12 @@
+## 0.1.4
+
+Features;
+- Shrink selection
+- Activate on other lisps than Clojure
+
+Fixes:
+- Indent ragne now works
+
 ## 0.1.1
 
 Features:
