@@ -4,9 +4,9 @@ This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for 
 
 **Paredit**: provides structural editing and navigation for LISPs
 
-<center>
-<img src="https://github.com/PEZ/paredit-for-vscode/raw/master/assets/paredit-blue-bg-300.png" title="Paredit icon"></img>
-</center>
+<p align="center">
+<img src="https://github.com/PEZ/paredit-for-vscode/raw/master/assets/paredit.png" title="Paredit icon"></img>
+</p>
 
 Inspired by Atom's [lisp-paredit](https://github.com/jonspalding/lisp-paredit)
 

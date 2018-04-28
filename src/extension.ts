@@ -68,7 +68,7 @@ const edit = (fn, ...args) =>
                 utils.select(textEditor, res.newIndex);
     }
 
-const pareditCommands: [[string, Function]] = [
+const pareditCommands: [string, Function][] = [
 
     // NAVIGATION
     ['paredit.forwardSexp', navigate(paredit.navigator.forwardSexp)],

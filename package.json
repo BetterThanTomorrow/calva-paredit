@@ -1,8 +1,8 @@
 {
-    "name": "paredit",
+    "name": "paredit-revived",
     "displayName": "Paredit for VS Code",
     "description": "Provides structural editing and navigation for LISPs",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
