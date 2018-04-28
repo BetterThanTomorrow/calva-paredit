@@ -27,6 +27,7 @@
         "onCommand:paredit.forwardDownSexp",
         "onCommand:paredit.backwardUpSexp",
         "onCommand:paredit.sexpRangeExpansion",
+        "onCommand:paredit.sexpRangeContracrion",
         "onCommand:paredit.closeList",
         "onCommand:paredit.rangeForDefun",
         "onCommand:paredit.slurpSexpForward",
@@ -71,6 +72,10 @@
             {
                 "command": "paredit.sexpRangeExpansion",
                 "title": "Paredit: Sexp Range Expansion"
+            },
+            {
+                "command": "paredit.sexpRangeContraction",
+                "title": "Paredit: Sexp Range Contraction (Shrink Selection)"
             },
             {
                 "command": "paredit.closeList",
@@ -170,6 +175,11 @@
                 "command": "paredit.sexpRangeExpansion",
                 "key": "ctrl+w",
                 "mac": "ctrl+w",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.sexpRangeContraction",
+                "key": "ctrl+shift+w",
                 "when": "editorTextFocus"
             },
             {

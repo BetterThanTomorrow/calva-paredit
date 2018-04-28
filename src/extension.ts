@@ -5,18 +5,32 @@ import { commands, window, ExtensionContext } from 'vscode';
 let paredit = require('paredit.js');
 
 const languages = new Set(["clojure", "lisp", "scheme"]);
-let enabled = true;
+let enabled = true,
+    expandState = { range: null, prev: null };
 
 const navigate = (fn, ...args) =>
     ({ textEditor, ast, selection }) => {
         let res = fn(ast, selection.cursor, ...args);
         utils.select(textEditor, res);
     }
-const navigateRange = (fn, ...args) =>
+
+const navigateExpandSelecion = (fn, ...args) =>
     ({ textEditor, ast, selection }) => {
-        let res = fn(ast, selection.start, selection.end, ...args);
-        utils.select(textEditor, res);
+        let range = textEditor.selection,
+            res = fn(ast, selection.start, selection.end, ...args);
+        if (expandState.prev == null || !range.contains(expandState.prev.range)) {
+            expandState = { range: range, prev: null };
+        }
+        expandState = { range: utils.select(textEditor, res), prev: expandState };
     }
+
+function navigateContractSelecion({ textEditor, selection }) {
+    let range = textEditor.selection;
+    if (expandState.prev && expandState.prev.range && range.contains(expandState.prev.range)) {
+        textEditor.selection = expandState.prev.range;
+        expandState = expandState.prev;
+    }
+}
 
 function indent({ textEditor, range }) {
     let src = textEditor.document.getText(),
@@ -61,7 +75,8 @@ const pareditCommands: [[string, Function]] = [
     ['paredit.backwardSexp', navigate(paredit.navigator.backwardSexp)],
     ['paredit.forwardDownSexp', navigate(paredit.navigator.forwardDownSexp)],
     ['paredit.backwardUpSexp', navigate(paredit.navigator.backwardUpSexp)],
-    ['paredit.sexpRangeExpansion', navigateRange(paredit.navigator.sexpRangeExpansion)],
+    ['paredit.sexpRangeExpansion', navigateExpandSelecion(paredit.navigator.sexpRangeExpansion)],
+    ['paredit.sexpRangeContraction', navigateContractSelecion],
     ['paredit.closeList', navigate(paredit.navigator.closeList)],
     ['paredit.rangeForDefun', navigate(paredit.navigator.rangeForDefun)],
 
