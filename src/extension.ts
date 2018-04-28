@@ -32,10 +32,10 @@ function navigateContractSelecion({ textEditor, selection }) {
     }
 }
 
-function indent({ textEditor, range }) {
+function indent({ textEditor, selection }) {
     let src = textEditor.document.getText(),
         ast = paredit.parse(src),
-        res = paredit.editor.indentRange(ast, src, range.start, range.end);
+        res = paredit.editor.indentRange(ast, src, selection.start, selection.end);
 
     utils
         .edit(textEditor, utils.commands(res))
@@ -60,7 +60,7 @@ const edit = (fn, ...args) =>
                         utils.select(textEditor, res.newIndex);
                         indent({
                             textEditor: textEditor,
-                            range: sel
+                            selection: sel
                         })
                     });
             }
