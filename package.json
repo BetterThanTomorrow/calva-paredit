@@ -2,7 +2,7 @@
     "name": "paredit-revived",
     "displayName": "Paredit Revived",
     "description": "Provides VS Code with structural editing and navigation for LISPs",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
