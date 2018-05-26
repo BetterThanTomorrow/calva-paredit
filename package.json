@@ -1,8 +1,8 @@
 {
     "name": "paredit-revived",
-    "displayName": "Paredit Revived",
-    "description": "Provides VS Code with structural editing and navigation for LISPs",
-    "version": "0.1.5",
+    "displayName": "Calva Paredit",
+    "description": "Sstructural editing and navigation for LISPs",
+    "version": "0.1.6",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
@@ -10,7 +10,7 @@
         "vscode": "^1.5.0"
     },
     "categories": [
-        "Languages",
+        "Programming Languages",
         "Formatters",
         "Other"
     ],
