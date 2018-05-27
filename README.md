@@ -1,8 +1,8 @@
-# Calva Paredit - for Visual Studio Code
+# Calva Paredit
 
-This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for [VS Code](https://code.visualstudio.com). It is a thin wrapper around [paredit.js](http://robert.kra.hn/projects/paredit-js). You find it inside Code's extansion view and on it's [Visual Studio Marketplace page](https://marketplace.visualstudio.com/items?itemName=cospaia.paredit-revived).
+Structural editing and navigation for LISPs
 
-**Calva Paredit** provides structural editing and navigation for LISPs
+This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for [Visual Studio Code](https://code.visualstudio.com). It is a thin wrapper around [paredit.js](http://robert.kra.hn/projects/paredit-js). You find it inside Code's extansion view and on [the Marketplace](https://marketplace.visualstudio.com/items?itemName=cospaia.paredit-revived).
 
 <p align="center">
 <a href="https://marketplace.visualstudio.com/items?itemName=cospaia.paredit-revived"><img width="128px" height="128px" src="https://github.com/PEZ/paredit-for-vscode/raw/master/assets/paredit.png" title="Paredit icon"></img></a>
@@ -49,10 +49,10 @@ ctrl+alt+i         | Indent
 
 The old Paredit extension, made by [clptn](https://github.com/clptn/code-paredit) was abandonded and I couldn't reach him. This extension takes off extactly where clptn left, which was a beautiful and clean extension, almost feature complete, and with just a few bugs. I intend to fix whatever bugs I and others find and have started to add the features I and others miss. I also intend to keep maintaining this extenson and if I find myself not able to do so I will try find another maintaner.
 
-## By Better Than Tomorrow
+## Maintained by Better Than Tomorrow
 
 * Peter Strömberg
-* Pedri Girardi
+* Pedro Girardi
 * You?
 
 
