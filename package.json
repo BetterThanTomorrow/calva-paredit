@@ -1,7 +1,7 @@
 {
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
-    "description": "Sstructural editing and navigation for LISPs",
+    "description": "Structural editing and navigation for LISPs",
     "version": "0.1.7",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
@@ -43,6 +43,8 @@
     },
     "activationEvents": [
         "onLanguage:clojure",
+        "onLanguage:lisp",
+        "onLanguage:scheme",
         "onCommand:paredit.forwardSexp",
         "onCommand:paredit.backwardSexp",
         "onCommand:paredit.forwardDownSexp",
