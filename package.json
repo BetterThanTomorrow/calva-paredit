@@ -2,7 +2,7 @@
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
     "description": "Structural editing and navigation for LISPs",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
@@ -100,12 +100,12 @@
             {
                 "category": "Paredit",
                 "command": "paredit.sexpRangeExpansion",
-                "title": "Sexp Range Expansion"
+                "title": "Expand Selection"
             },
             {
                 "category": "Paredit",
                 "command": "paredit.sexpRangeContraction",
-                "title": "Sexp Range Contraction (Shrink Selection)"
+                "title": "Shrink Selection"
             },
             {
                 "category": "Paredit",
@@ -115,7 +115,7 @@
             {
                 "category": "Paredit",
                 "command": "paredit.rangeForDefun",
-                "title": "Range For Defn"
+                "title": "Select Current Top Level Form"
             },
             {
                 "category": "Paredit",

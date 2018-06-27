@@ -23,7 +23,7 @@ ctrl+up            | Backward Up Sexp
 ctrl+alt+right     | Close List
 ctrl+w             | Expand Selection
 ctrl+shift+w       | Shrink Selection
-ctrl+alt+w space   | Select Defn
+ctrl+alt+w space   | Select Current Top Level Form
 
 ### Editing
 
