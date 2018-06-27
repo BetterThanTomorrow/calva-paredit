@@ -20,10 +20,10 @@ ctrl+right         | Forward Sexp
 ctrl+left          | Backward Sexp
 ctrl+down          | Forward Down Sexp
 ctrl+up            | Backward Up Sexp
+ctrl+alt+right     | Close List
 ctrl+w             | Expand Selection
 ctrl+shift+w       | Shrink Selection
----                | Close List
----                | Select Defn
+ctrl+alt+w space   | Select Defn
 
 ### Editing
 

@@ -219,6 +219,11 @@
                 "when": "editorTextFocus"
             },
             {
+                "command": "paredit.closeList",
+                "key": "ctrl+alt+right",
+                "when": "editorTextFocus"
+            },
+            {
                 "command": "paredit.sexpRangeExpansion",
                 "key": "ctrl+w",
                 "mac": "ctrl+w",
@@ -227,6 +232,11 @@
             {
                 "command": "paredit.sexpRangeContraction",
                 "key": "ctrl+shift+w",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.rangeForDefun",
+                "key": "ctrl+alt+w space",
                 "when": "editorTextFocus"
             },
             {
