@@ -330,6 +330,9 @@
         "compile": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install"
     },
+    "extensionDependencies": [
+        "cospaia.calva-fmt"
+    ],
     "dependencies": {
         "paredit.js": "^0.2.13"
     },

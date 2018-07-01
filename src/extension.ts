@@ -1,8 +1,10 @@
 'use strict';
 import { StatusBar } from './status_bar';
 import * as utils from './utils';
-import { commands, window, ExtensionContext } from 'vscode';
-let paredit = require('paredit.js');
+import { commands, window, ExtensionContext, extensions, Range } from 'vscode';
+
+const paredit = require('paredit.js');
+const calvaFmt = extensions.getExtension('cospaia.calva-fmt').exports;
 
 const languages = new Set(["clojure", "lisp", "scheme"]);
 let enabled = true,
@@ -33,6 +35,8 @@ function navigateContractSelecion({ textEditor, selection }) {
 }
 
 function indent({ textEditor, selection }) {
+    //const document = textEditor.document;
+    //calvaFmt.formatRange(document, new Range(document.positionAt(selection.start), document.positionAt(selection.end)))
     let src = textEditor.document.getText(),
         ast = paredit.parse(src),
         res = paredit.editor.indentRange(ast, src, selection.start, selection.end);
@@ -57,7 +61,7 @@ const edit = (fn, ...args) =>
                 utils
                     .edit(textEditor, cmd)
                     .then((applied?) => {
-                        utils.select(textEditor, res.newIndex);
+                        //utils.select(textEditor, res.newIndex);
                         indent({
                             textEditor: textEditor,
                             selection: sel
