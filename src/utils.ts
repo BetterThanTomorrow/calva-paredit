@@ -26,9 +26,9 @@ export const commands = (res) => res.changes.map(toCommand);
 
 export function end(command: Command) {
     if (command.kind === 'insert')
-        return command.start + command.text.length
+        return command.start + command.text.length;
     else
-        return command.start
+        return command.start + command.length;
 }
 
 export function getSelection(editor: TextEditor) {
@@ -63,7 +63,7 @@ export const handle = (editor: TextEditor, command: Command) =>
         if (command.kind === 'insert')
             edit.insert(start, command.text);
         else {
-            let end = start.translate(0, command.length);
+            let end = editor.document.positionAt(command.start + command.length);
             edit.delete(new Selection(start, end));
         }
     }
