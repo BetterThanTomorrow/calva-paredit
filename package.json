@@ -2,7 +2,7 @@
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
     "description": "Structural editing and navigation for LISPs",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
@@ -331,7 +331,7 @@
         "postinstall": "node ./node_modules/vscode/bin/install"
     },
     "dependencies": {
-        "paredit.js": "^0.2.13"
+        "paredit.js": "^0.3.3"
     },
     "devDependencies": {
         "typescript": "^2.0.3",

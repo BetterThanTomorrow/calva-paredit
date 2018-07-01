@@ -56,7 +56,7 @@ const edit = (fn, ...args) =>
 
                 utils
                     .edit(textEditor, cmd)
-                    .then((applied?) => {
+                    .then((applied?) => {                        
                         utils.select(textEditor, res.newIndex);
                         indent({
                             textEditor: textEditor,
