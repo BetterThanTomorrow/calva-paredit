@@ -1,7 +1,7 @@
 'use strict';
 import { StatusBar } from './status_bar';
 import * as utils from './utils';
-import { commands, window, ExtensionContext, extensions, Range } from 'vscode';
+import { commands, window, ExtensionContext, extensions, Range, TextDocument, Position } from 'vscode';
 
 const paredit = require('paredit.js');
 const calvaFmt = extensions.getExtension('cospaia.calva-fmt').exports;
@@ -34,9 +34,13 @@ function navigateContractSelecion({ textEditor, selection }) {
     }
 }
 
-function indent({ textEditor, selection }) {
-    //const document = textEditor.document;
-    //calvaFmt.formatRange(document, new Range(document.positionAt(selection.start), document.positionAt(selection.end)))
+function indent({ textEditor, selection, cursor }) {
+    const document: TextDocument = textEditor.document;
+    const pos: Position = document.positionAt(selection.start - 1);
+    calvaFmt.formatPosition(document, pos);
+    utils.select(textEditor, cursor);
+    /*
+
     let src = textEditor.document.getText(),
         ast = paredit.parse(src),
         res = paredit.editor.indentRange(ast, src, selection.start, selection.end);
@@ -44,6 +48,7 @@ function indent({ textEditor, selection }) {
     utils
         .edit(textEditor, utils.commands(res))
         .then((applied?) => utils.undoStop(textEditor));
+    */
 }
 
 const edit = (fn, ...args) =>
@@ -61,10 +66,11 @@ const edit = (fn, ...args) =>
                 utils
                     .edit(textEditor, cmd)
                     .then((applied?) => {
-                        //utils.select(textEditor, res.newIndex);
+                        utils.select(textEditor, res.newIndex);
                         indent({
                             textEditor: textEditor,
-                            selection: sel
+                            selection: sel,
+                            cursor: res.newIndex
                         })
                     });
             }
