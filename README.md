@@ -21,6 +21,11 @@ ctrl+left          | Backward Sexp
 ctrl+down          | Forward Down Sexp
 ctrl+up            | Backward Up Sexp
 ctrl+alt+right     | Close List
+
+### Selecting
+
+Default keybinding | Action
+------------------ | ------
 ctrl+w             | Expand Selection
 ctrl+shift+w       | Shrink Selection
 ctrl+alt+w space   | Select Current Top Level Form
@@ -45,9 +50,30 @@ ctrl+alt+{         | Wrap Around {}
 ctrl+alt+i         | Indent
 ---                | Transpose
 
+### Copying/Yanking
+
+Default keybinding | Action
+------------------ | ------
+ctrl+alt+c ctrl+right         | Copy Forward Sexp
+ctrl+alt+c ctrl+left          | Copy Backward Sexp
+ctrl+alt+c ctrl+down          | Copy Forward Down Sexp
+ctrl+alt+c ctrl+up            | Copy Backward Up Sexp
+ctrl+alt+c ctrl+alt+right     | Copy Close List
+
+### Cutting
+
+Default keybinding | Action
+------------------ | ------
+ctrl+alt+x ctrl+right         | Cut Forward Sexp
+ctrl+alt+x ctrl+left          | Cut Backward Sexp
+ctrl+alt+x ctrl+down          | Cut Forward Down Sexp
+ctrl+alt+x ctrl+up            | Cut Backward Up Sexp
+ctrl+alt+x ctrl+alt+right     | Cut Close List
+
+
 ## Why are there two Paredit extensions?
 
-The old Paredit extension, made by [clptn](https://github.com/clptn/code-paredit) was abandonded and I couldn't reach him. This extension takes off extactly where clptn left, which was a beautiful and clean extension, almost feature complete, and with just a few bugs. I intend to fix whatever bugs I and others find and have started to add the features I and others miss. I also intend to keep maintaining this extenson and if I find myself not able to do so I will try find another maintaner.
+The old Paredit extension, made by [clptn](https://github.com/clptn/code-paredit) seemed abandonded and I couldn't reach him. This extension takes off extactly where clptn left, which was a beautiful and clean extension, almost feature complete, and with just a few bugs. I intend to fix whatever bugs I and others find and have started to add the features I and others miss. I also intend to keep maintaining this extenson and if I find myself not able to do so I will try find another maintaner.
 
 ## Maintained by Better Than Tomorrow
 

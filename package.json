@@ -2,7 +2,7 @@
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
     "description": "Structural editing and navigation for LISPs",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
@@ -99,6 +99,16 @@
             },
             {
                 "category": "Paredit",
+                "command": "paredit.closeList",
+                "title": "Close List"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.rangeForDefun",
+                "title": "Select Current Top Level Form"
+            },
+            {
+                "category": "Paredit",
                 "command": "paredit.sexpRangeExpansion",
                 "title": "Expand Selection"
             },
@@ -109,15 +119,64 @@
             },
             {
                 "category": "Paredit",
-                "command": "paredit.closeList",
-                "title": "Close List"
+                "command": "paredit.yankForwardSexp",
+                "title": "Copy Forward Sexp"
             },
             {
                 "category": "Paredit",
-                "command": "paredit.rangeForDefun",
-                "title": "Select Current Top Level Form"
+                "command": "paredit.yankBackwardSexp",
+                "title": "Copy Backward Sexp"
             },
             {
+                "category": "Paredit",
+                "command": "paredit.yankForwardDownSexp",
+                "title": "Copy Down Sexp"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.yankBackwardUpSexp",
+                "title": "Copy Up Sexp"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.yankCloseList",
+                "title": "Copy Close List"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.yankRangeForDefun",
+                "title": "Copy Select Current Top Level Form"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.cutForwardSexp",
+                "title": "Cut Forward Sexp"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.cutBackwardSexp",
+                "title": "Cut Backward Sexp"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.cutForwardDownSexp",
+                "title": "Cut Down Sexp"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.cutBackwardUpSexp",
+                "title": "Cut Up Sexp"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.cutCloseList",
+                "title": "Cut Close List"
+            },
+            {
+                "category": "Paredit",
+                "command": "paredit.cutRangeForDefun",
+                "title": "Cut Select Current Top Level Form"
+            },            {
                 "category": "Paredit",
                 "command": "paredit.slurpSexpForward",
                 "title": "Slurp Sexp Forward"
@@ -224,6 +283,11 @@
                 "when": "editorTextFocus"
             },
             {
+                "command": "paredit.rangeForDefun",
+                "key": "ctrl+alt+w space",
+                "when": "editorTextFocus"
+            },
+            {
                 "command": "paredit.sexpRangeExpansion",
                 "key": "ctrl+w",
                 "mac": "ctrl+w",
@@ -235,11 +299,73 @@
                 "when": "editorTextFocus"
             },
             {
-                "command": "paredit.rangeForDefun",
-                "key": "ctrl+alt+w space",
+                "command": "paredit.yankForwardSexp",
+                "key": "ctrl+alt+c ctrl+right",
+                "mac": "ctrl+alt+c ctrl+right",
                 "when": "editorTextFocus"
             },
             {
+                "command": "paredit.yankBackwardSexp",
+                "key": "ctrl+alt+c ctrl+left",
+                "mac": "ctrl+alt+c ctrl+left",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.yankForwardDownSexp",
+                "key": "ctrl+alt+c ctrl+down",
+                "mac": "ctrl+alt+c ctrl+down",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.yankBackwardUpSexp",
+                "key": "ctrl+alt+c ctrl+up",
+                "mac": "ctrl+alt+c ctrl+up",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.yankCloseList",
+                "key": "ctrl+alt+c ctrl+alt+right",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.yankRangeForDefun",
+                "key": "ctrl+alt+c space",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.cutForwardSexp",
+                "key": "ctrl+alt+x ccutright",
+                "mac": "ctrl+alt+x ctrl+right",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.cutBackwardSexp",
+                "key": "ctrl+alt+x ccutleft",
+                "mac": "ctrl+alt+x ctrl+left",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.cutForwardDownSexp",
+                "key": "ctrl+alt+x ccutdown",
+                "mac": "ctrl+alt+x ctrl+down",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.cutBackwardUpSexp",
+                "key": "ctrl+alt+x ccutup",
+                "mac": "ctrl+alt+x ctrl+up",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.cutCloseList",
+                "key": "ctrl+alt+x ctrl+alt+right",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "paredit.cutRangeForDefun",
+                "key": "ctrl+alt+x space",
+                "when": "editorTextFocus"
+            },            {
                 "command": "paredit.slurpSexpForward",
                 "key": "ctrl+alt+.",
                 "mac": "ctrl+alt+.",
@@ -331,6 +457,7 @@
         "postinstall": "node ./node_modules/vscode/bin/install"
     },
     "dependencies": {
+        "clipboardy": "^1.2.3",
         "paredit.js": "^0.3.3"
     },
     "devDependencies": {

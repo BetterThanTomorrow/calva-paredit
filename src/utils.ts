@@ -1,5 +1,6 @@
 'use strict';
 import { TextEditor, TextEditorEdit, Selection, Range } from 'vscode';
+import * as clipboardy from 'clipboardy';
 
 interface Insert {
     kind: "insert",
@@ -22,6 +23,19 @@ function toCommand([command, start, arg]): Command {
         return { kind: command, start: start, length: arg };
 }
 
+
+
+function toVscodePositions(editor: TextEditor, pos: any) {
+    let start, end: number;
+    if (typeof pos === "number")
+        start = end = pos;
+    else if (pos instanceof Array)
+        start = pos[0], end = pos[1];
+    let pos1 = editor.document.positionAt(start), pos2 = editor.document.positionAt(end);
+    return { pos1, pos2 };
+}
+
+
 export const commands = (res) => res.changes.map(toCommand);
 
 export function end(command: Command) {
@@ -40,21 +54,31 @@ export function getSelection(editor: TextEditor) {
 }
 
 export function select(editor: TextEditor, pos: any): Range {
-    let start, end: number;
-
-    if (typeof pos === "number")
-        start = end = pos;
-    else if (pos instanceof Array)
-        start = pos[0], end = pos[1];
-
-    let pos1 = editor.document.positionAt(start),
-        pos2 = editor.document.positionAt(end),
-        sel = new Selection(pos1, pos2);
+    const { pos1, pos2 } = toVscodePositions(editor, pos),
+          sel = new Selection(pos1, pos2);
 
     editor.selection = sel;
     editor.revealRange(sel);
     return sel;
 }
+
+
+export function copy(editor: TextEditor, pos: [number, number]) {
+    const { pos1, pos2 } = toVscodePositions(editor, pos),
+          range = new Range(pos1, pos2),
+          text = editor.document.getText(range);
+
+    clipboardy.writeSync(text);
+}
+
+
+export function cut(editor: TextEditor, pos: [number, number]) {
+    const command = toCommand(["delete", Math.min(pos[0], pos[1]), Math.abs(pos[1] - pos[0])]);
+
+    copy(editor, pos);
+    edit(editor, [command]);
+}
+
 
 export const handle = (editor: TextEditor, command: Command) =>
     edit => {
@@ -68,6 +92,7 @@ export const handle = (editor: TextEditor, command: Command) =>
         }
     }
 
+
 export const edit = (editor: TextEditor, commands: [Command]) =>
     commands
         .reduce((prev, command) =>
@@ -75,6 +100,7 @@ export const edit = (editor: TextEditor, commands: [Command]) =>
                 editor.edit(handle(editor, command),
                     { undoStopAfter: false, undoStopBefore: false })),
             Promise.resolve(true));
+
 
 export function undoStop(editor: TextEditor) {
     let pos = editor.document.positionAt(0);

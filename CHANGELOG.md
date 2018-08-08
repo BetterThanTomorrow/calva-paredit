@@ -1,3 +1,9 @@
+## 0.1.11
+
+Features;
+- Copy and cut commands for each navigation command
+
+
 ## 0.1.4
 
 Features;

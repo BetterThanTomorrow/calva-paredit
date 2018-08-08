@@ -14,6 +14,20 @@ const navigate = (fn, ...args) =>
         utils.select(textEditor, res);
     }
 
+const yank = (fn, ...args) =>
+    ({ textEditor, ast, selection }) => {
+        let res = fn(ast, selection.cursor, ...args),
+            positions = typeof(res) === "number" ? [selection.cursor, res] : res;
+        utils.copy(textEditor, positions);
+    }
+
+const cut = (fn, ...args) =>
+    ({ textEditor, ast, selection }) => {
+        let res = fn(ast, selection.cursor, ...args),
+            positions = typeof(res) === "number" ? [selection.cursor, res] : res;
+        utils.cut(textEditor, positions);
+    }
+
 const navigateExpandSelecion = (fn, ...args) =>
     ({ textEditor, ast, selection }) => {
         let range = textEditor.selection,
@@ -75,10 +89,30 @@ const pareditCommands: [string, Function][] = [
     ['paredit.backwardSexp', navigate(paredit.navigator.backwardSexp)],
     ['paredit.forwardDownSexp', navigate(paredit.navigator.forwardDownSexp)],
     ['paredit.backwardUpSexp', navigate(paredit.navigator.backwardUpSexp)],
+    ['paredit.closeList', navigate(paredit.navigator.closeList)],
+
+    // SELECTING
     ['paredit.sexpRangeExpansion', navigateExpandSelecion(paredit.navigator.sexpRangeExpansion)],
     ['paredit.sexpRangeContraction', navigateContractSelecion],
-    ['paredit.closeList', navigate(paredit.navigator.closeList)],
     ['paredit.rangeForDefun', navigate(paredit.navigator.rangeForDefun)],
+
+    // COPYING
+    ['paredit.yankForwardSexp', yank(paredit.navigator.forwardSexp)],
+    ['paredit.yankBackwardSexp', yank(paredit.navigator.backwardSexp)],
+    ['paredit.yankForwardDownSexp', yank(paredit.navigator.forwardDownSexp)],
+    ['paredit.yankBackwardUpSexp', yank(paredit.navigator.backwardUpSexp)],
+    ['paredit.yankCloseList', yank(paredit.navigator.closeList)],
+    ['paredit.yankRangeForDefun', yank(paredit.navigator.rangeForDefun)],
+
+    // CUTING
+    ['paredit.cutForwardSexp', cut(paredit.navigator.forwardSexp)],
+    ['paredit.cutBackwardSexp', cut(paredit.navigator.backwardSexp)],
+    ['paredit.cutForwardDownSexp', cut(paredit.navigator.forwardDownSexp)],
+    ['paredit.cutBackwardUpSexp', cut(paredit.navigator.backwardUpSexp)],
+    ['paredit.cutCloseList', cut(paredit.navigator.closeList)],
+    ['paredit.cutRangeForDefun', cut(paredit.navigator.rangeForDefun)],
+
+
 
     // EDITING
     ['paredit.slurpSexpForward', edit(paredit.editor.slurpSexp, { 'backward': false })],
