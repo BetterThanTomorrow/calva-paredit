@@ -36,9 +36,10 @@ function navigateContractSelecion({ textEditor, selection }) {
 
 function indent({ textEditor, selection, cursor }) {
     const document: TextDocument = textEditor.document;
-    const pos: Position = document.positionAt(selection.start - 1);
+    const pos: Position = document.positionAt(selection.end + 2);
     calvaFmt.formatPosition(document, pos);
-    utils.select(textEditor, cursor);
+    utils.select(textEditor, cursor ? cursor : document.offsetAt(pos));
+    utils.undoStop(textEditor);
     /*
 
     let src = textEditor.document.getText(),
