@@ -176,7 +176,8 @@
                 "category": "Paredit",
                 "command": "paredit.cutRangeForDefun",
                 "title": "Cut Select Current Top Level Form"
-            },            {
+            },
+            {
                 "category": "Paredit",
                 "command": "paredit.slurpSexpForward",
                 "title": "Slurp Sexp Forward"
@@ -365,7 +366,8 @@
                 "command": "paredit.cutRangeForDefun",
                 "key": "ctrl+alt+x space",
                 "when": "editorTextFocus"
-            },            {
+            },
+            {
                 "command": "paredit.slurpSexpForward",
                 "key": "ctrl+alt+.",
                 "mac": "ctrl+alt+.",
@@ -461,10 +463,10 @@
         "paredit.js": "^0.3.3"
     },
     "devDependencies": {
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0",
-        "mocha": "^2.3.3",
+        "@types/mocha": "^2.2.32",
         "@types/node": "^6.0.40",
-        "@types/mocha": "^2.2.32"
+        "mocha": "^2.3.3",
+        "typescript": "^2.0.3",
+        "vscode": "^1.1.18"
     }
 }

@@ -17,14 +17,14 @@ const navigate = (fn, ...args) =>
 const yank = (fn, ...args) =>
     ({ textEditor, ast, selection }) => {
         let res = fn(ast, selection.cursor, ...args),
-            positions = typeof(res) === "number" ? [selection.cursor, res] : res;
+            positions = typeof (res) === "number" ? [selection.cursor, res] : res;
         utils.copy(textEditor, positions);
     }
 
 const cut = (fn, ...args) =>
     ({ textEditor, ast, selection }) => {
         let res = fn(ast, selection.cursor, ...args),
-            positions = typeof(res) === "number" ? [selection.cursor, res] : res;
+            positions = typeof (res) === "number" ? [selection.cursor, res] : res;
         utils.cut(textEditor, positions);
     }
 
@@ -70,7 +70,7 @@ const edit = (fn, ...args) =>
 
                 utils
                     .edit(textEditor, cmd)
-                    .then((applied?) => {                        
+                    .then((applied?) => {
                         utils.select(textEditor, res.newIndex);
                         indent({
                             textEditor: textEditor,
@@ -82,37 +82,36 @@ const edit = (fn, ...args) =>
                 utils.select(textEditor, res.newIndex);
     }
 
-const pareditCommands: [string, Function][] = [
 
-    // NAVIGATION
-    ['paredit.forwardSexp', navigate(paredit.navigator.forwardSexp)],
-    ['paredit.backwardSexp', navigate(paredit.navigator.backwardSexp)],
-    ['paredit.forwardDownSexp', navigate(paredit.navigator.forwardDownSexp)],
-    ['paredit.backwardUpSexp', navigate(paredit.navigator.backwardUpSexp)],
-    ['paredit.closeList', navigate(paredit.navigator.closeList)],
+const navigationCopyCutCommands = (commands) => {
+    const capitalizeFirstLetter = (s) => { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    let result: [string, Function][] = new Array<[string, Function]>();
+    Object.keys(commands).forEach((c) => {
+        result.push([`paredit.${c}`, navigate(commands[c])]);
+        result.push([`paredit.yank${capitalizeFirstLetter(c)}`, yank(commands[c])]);
+        result.push([`paredit.cut${capitalizeFirstLetter(c)}`, cut(commands[c])]);
+    });
+    return result;
+}
+
+const navCopyCutcommands = {
+    'rangeForDefun': paredit.navigator.rangeForDefun,
+    'forwardSexp': paredit.navigator.forwardSexp,
+    'backwardSexp': paredit.navigator.backwardSexp,
+    'forwardDownSexp': paredit.navigator.forwardDownSexp,
+    'backwardUpSexp': paredit.navigator.backwardUpSexp,
+    'closeList': paredit.navigator.closeList
+};
+
+const pareditCommands: [string, Function][] = [
 
     // SELECTING
     ['paredit.sexpRangeExpansion', navigateExpandSelecion(paredit.navigator.sexpRangeExpansion)],
     ['paredit.sexpRangeContraction', navigateContractSelecion],
-    ['paredit.rangeForDefun', navigate(paredit.navigator.rangeForDefun)],
 
-    // COPYING
-    ['paredit.yankForwardSexp', yank(paredit.navigator.forwardSexp)],
-    ['paredit.yankBackwardSexp', yank(paredit.navigator.backwardSexp)],
-    ['paredit.yankForwardDownSexp', yank(paredit.navigator.forwardDownSexp)],
-    ['paredit.yankBackwardUpSexp', yank(paredit.navigator.backwardUpSexp)],
-    ['paredit.yankCloseList', yank(paredit.navigator.closeList)],
-    ['paredit.yankRangeForDefun', yank(paredit.navigator.rangeForDefun)],
-
-    // CUTING
-    ['paredit.cutForwardSexp', cut(paredit.navigator.forwardSexp)],
-    ['paredit.cutBackwardSexp', cut(paredit.navigator.backwardSexp)],
-    ['paredit.cutForwardDownSexp', cut(paredit.navigator.forwardDownSexp)],
-    ['paredit.cutBackwardUpSexp', cut(paredit.navigator.backwardUpSexp)],
-    ['paredit.cutCloseList', cut(paredit.navigator.closeList)],
-    ['paredit.cutRangeForDefun', cut(paredit.navigator.rangeForDefun)],
-
-
+    // NAVIGATION, COPY, CUT
+    // (Happens in navigationCopyCutCommands())
 
     // EDITING
     ['paredit.slurpSexpForward', edit(paredit.editor.slurpSexp, { 'backward': false })],
@@ -158,6 +157,8 @@ export function activate(context: ExtensionContext) {
         commands.registerCommand('paredit.toggle', () => { enabled = !enabled; statusBar.enabled = enabled; }),
         window.onDidChangeActiveTextEditor((e) => statusBar.visible = languages.has(e.document.languageId)),
 
+        ...navigationCopyCutCommands(navCopyCutcommands)
+            .map(([command, fn]) => commands.registerCommand(command, wrapPareditCommand(fn))),
         ...pareditCommands
             .map(([command, fn]) => commands.registerCommand(command, wrapPareditCommand(fn))));
 }
