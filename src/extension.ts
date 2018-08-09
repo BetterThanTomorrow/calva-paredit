@@ -83,7 +83,7 @@ const edit = (fn, ...args) =>
     }
 
 
-const navigationCopyCutCommands = (commands) => {
+const createNavigationCopyCutCommands = (commands) => {
     const capitalizeFirstLetter = (s) => { return s.charAt(0).toUpperCase() + s.slice(1); }
 
     let result: [string, Function][] = new Array<[string, Function]>();
@@ -111,7 +111,7 @@ const pareditCommands: [string, Function][] = [
     ['paredit.sexpRangeContraction', navigateContractSelecion],
 
     // NAVIGATION, COPY, CUT
-    // (Happens in navigationCopyCutCommands())
+    // (Happens in createNavigationCopyCutCommands())
 
     // EDITING
     ['paredit.slurpSexpForward', edit(paredit.editor.slurpSexp, { 'backward': false })],
@@ -157,7 +157,7 @@ export function activate(context: ExtensionContext) {
         commands.registerCommand('paredit.toggle', () => { enabled = !enabled; statusBar.enabled = enabled; }),
         window.onDidChangeActiveTextEditor((e) => statusBar.visible = languages.has(e.document.languageId)),
 
-        ...navigationCopyCutCommands(navCopyCutcommands)
+        ...createNavigationCopyCutCommands(navCopyCutcommands)
             .map(([command, fn]) => commands.registerCommand(command, wrapPareditCommand(fn))),
         ...pareditCommands
             .map(([command, fn]) => commands.registerCommand(command, wrapPareditCommand(fn))));
