@@ -405,13 +405,13 @@
             },
             {
                 "command": "paredit.killSexpForward",
-                "key": "cmd+shift+backspace",
+                "key": "ctrl+shift+backspace",
                 "mac": "cmd+shift+backspace",
                 "when": "editorTextFocus"
             },
             {
                 "command": "paredit.killSexpBackward",
-                "key": "cmd+backspace",
+                "key": "ctrl+backspace",
                 "mac": "cmd+backspace",
                 "when": "editorTextFocus"
             },
