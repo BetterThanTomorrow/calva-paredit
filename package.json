@@ -2,7 +2,7 @@
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
     "description": "Structural editing and navigation for LISPs",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
