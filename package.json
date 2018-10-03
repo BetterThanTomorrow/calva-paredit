@@ -1,8 +1,8 @@
 {
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
-    "description": "Structural editing and navigation for LISPs",
-    "version": "0.1.12",
+    "description": "Structural editing and navigation for Clojure and other LISPs",
+    "version": "0.1.13",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
