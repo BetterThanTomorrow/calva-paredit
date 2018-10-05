@@ -71,14 +71,13 @@ ctrl+alt+x ctrl+up            | Cut Backward Up Sexp
 ctrl+alt+x ctrl+alt+right     | Cut Close List
 
 
-## Why are there two Paredit extensions?
+## Part of Calva
 
-The old Paredit extension, made by [clptn](https://github.com/clptn/code-paredit) seemed abandonded and I couldn't reach him. This extension takes off extactly where clptn left, which was a beautiful and clean extension, almost feature complete, and with just a few bugs. I intend to fix whatever bugs I and others find and have started to add the features I and others miss. I also intend to keep maintaining this extenson and if I find myself not able to do so I will try find another maintaner.
+Calva Paredit can be used standalone, but now also comes bundled with [Calva](https://marketplace.visualstudio.com/items?itemName=cospaia.clojure4vscode). Together with [Calva Formatter](https://marketplace.visualstudio.com/items?itemName=cospaia.calva-fmt).
 
 ## Maintained by Better Than Tomorrow
 
 * Peter Strömberg
-* Pedro Girardi
 * You?
 
 
