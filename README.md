@@ -2,13 +2,15 @@
 
 Structural editing and navigation for Clojure and other LISPs
 
-This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for [Visual Studio Code](https://code.visualstudio.com). It is a thin wrapper around [paredit.js](http://robert.kra.hn/projects/paredit-js). You find it inside Code's extansion view and on [the Marketplace](https://marketplace.visualstudio.com/items?itemName=cospaia.paredit-revived).
-
 <p align="center">
 <a href="https://marketplace.visualstudio.com/items?itemName=cospaia.paredit-revived"><img width="128px" height="128px" src="https://github.com/PEZ/paredit-for-vscode/raw/master/assets/paredit.png" title="Paredit icon"></img></a>
 </p>
 
-Inspired by Atom's [lisp-paredit](https://github.com/jonspalding/lisp-paredit)
+This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for [Visual Studio Code](https://code.visualstudio.com). It is a thin wrapper around [paredit.js](http://robert.kra.hn/projects/paredit-js). You find it inside Code's extansion view and on [the Marketplace](https://marketplace.visualstudio.com/items?itemName=cospaia.paredit-revived).
+
+## Part of Calva
+
+Calva Paredit can be used standalone, but also comes bundled with [Calva](https://marketplace.visualstudio.com/items?itemName=cospaia.clojure4vscode), together with [Calva Formatter](https://marketplace.visualstudio.com/items?itemName=cospaia.calva-fmt).
 
 ## Commands
 
@@ -70,11 +72,6 @@ ctrl+alt+x ctrl+down          | Cut Forward Down Sexp
 ctrl+alt+x ctrl+up            | Cut Backward Up Sexp
 ctrl+alt+x ctrl+alt+right     | Cut Close List
 
-
-## Part of Calva
-
-Calva Paredit can be used standalone, but now also comes bundled with [Calva](https://marketplace.visualstudio.com/items?itemName=cospaia.clojure4vscode). Together with [Calva Formatter](https://marketplace.visualstudio.com/items?itemName=cospaia.calva-fmt).
-
 ## Maintained by Better Than Tomorrow
 
 * Peter Strömberg
@@ -85,8 +82,8 @@ I also published and maintain [Calva](https://marketplace.visualstudio.com/items
 
 ## Happy Coding
 
-PRs welcome, file an issue or chat @pez up in the [`#editors` channel](https://clojurians.slack.com/messages/editors/) of the Clojurians Slack. Tweeting [@pappapez](https://twitter.com/pappapez) works too.
+PRs welcome, file an issue or chat @pez up in the [`#calva-dev` channel](https://clojurians.slack.com/messages/calva-dev/) of the Clojurians Slack. Tweeting [@pappapez](https://twitter.com/pappapez) works too.
 
-[![#editors in Clojurians Slack](https://img.shields.io/badge/clojurians-editors-blue.svg?logo=slack)](https://clojurians.slack.com/messages/editors/)
+[![#editors in Clojurians Slack](https://img.shields.io/badge/clojurians-calva--dev-blue.svg?logo=slack)](https://clojurians.slack.com/messages/calva-dev/)
 
 ❤️

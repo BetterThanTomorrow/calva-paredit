@@ -2,7 +2,7 @@
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
     "description": "Clojure structural editing and navigation",
-    "version": "0.1.14",
+    "version": "0.1.15",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
@@ -27,14 +27,14 @@
     },
     "badges": [
         {
-            "url": "https://img.shields.io/badge/clojurians-editors-blue.svg?logo=slack",
-            "href": "https://clojurians.slack.com/messages/editors/",
-            "description": "Let's talk in the #editors channel on the Clojurians Slack"
+            "url": "https://img.shields.io/badge/clojurians-calva--dev-blue.svg?logo=slack",
+            "href": "https://clojurians.slack.com/messages/calva-dev/",
+            "description": "Let's talk in the #calva-dev channel on the Clojurians Slack"
         },
         {
-            "url": "https://img.shields.io/badge/vscode--dev--community-clojure-blue.svg?logo=slack",
-            "href": "https://vscode-dev-community.slack.com/messages/clojure/",
-            "description": "See you in the #clojure channel on the VS Code Dev Slack"
+            "url": "https://img.shields.io/badge/clojurians-editors-blue.svg?logo=slack",
+            "href": "https://clojurians.slack.com/messages/editors/",
+            "description": "Also find us in the #editors channel"
         }
     ],
     "repository": {
@@ -463,10 +463,10 @@
         "paredit.js": "^0.3.3"
     },
     "devDependencies": {
-        "@types/mocha": "^2.2.32",
-        "@types/node": "^6.0.40",
-        "mocha": "^2.3.3",
-        "typescript": "^2.0.3",
+        "@types/mocha": "^5.2.5",
+        "@types/node": "^10.11.5",
+        "mocha": "^5.2.0",
+        "typescript": "^3.1.1",
         "vscode": "^1.1.18"
     }
 }
