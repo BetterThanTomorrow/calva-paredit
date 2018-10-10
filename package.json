@@ -27,14 +27,14 @@
     },
     "badges": [
         {
-            "url": "https://img.shields.io/badge/clojurians-calva--dev-blue.svg?logo=slack",
-            "href": "https://clojurians.slack.com/messages/calva-dev/",
-            "description": "Let's talk in the #calva-dev channel on the Clojurians Slack"
-        },
-        {
             "url": "https://img.shields.io/badge/clojurians-editors-blue.svg?logo=slack",
             "href": "https://clojurians.slack.com/messages/editors/",
             "description": "Also find us in the #editors channel"
+        },
+        {
+            "url": "https://img.shields.io/badge/clojurians-calva--dev-blue.svg?logo=slack",
+            "href": "https://clojurians.slack.com/messages/calva-dev/",
+            "description": "Let's talk in the #calva-dev channel on the Clojurians Slack"
         }
     ],
     "repository": {
