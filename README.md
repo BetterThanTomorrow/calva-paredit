@@ -14,6 +14,8 @@ Calva Paredit can be used standalone, but also comes bundled with [Calva](https:
 
 ## Commands
 
+Note: You can choose to disable all default key bindings by configuring `calva.paredit.defaultKeyMap` to `none`. (Then you probably alos want to register your own shortcuts for the commands you often use.)
+
 ### Navigation
 
 Default keybinding | Action
