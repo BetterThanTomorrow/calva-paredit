@@ -7,7 +7,7 @@
     "publisher": "cospaia",
     "license": "MIT",
     "engines": {
-        "vscode": "^1.5.0"
+        "vscode": "^1.20.0"
     },
     "categories": [
         "Programming Languages",
@@ -71,6 +71,25 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
+        "configuration": [
+            {
+                "title": "Paredit",
+                "type": "object",
+                "properties": {
+                    "calva.paredit.defaultKeyMap": {
+                        "type": "string",
+                        "description": "The default keymap to use for bindings when there is no custom binding.",
+                        "default": "legacy",
+                        "enum": [
+                            "legacy",
+                            "chorded",
+                            "none"
+                        ],
+                        "scope": "window"
+                    }
+                }
+            }
+        ],
         "commands": [
             {
                 "category": "Paredit",
@@ -257,199 +276,172 @@
             {
                 "command": "paredit.forwardSexp",
                 "key": "ctrl+right",
-                "mac": "ctrl+right",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.backwardSexp",
                 "key": "ctrl+left",
-                "mac": "ctrl+left",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.forwardDownSexp",
                 "key": "ctrl+down",
-                "mac": "ctrl+down",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.backwardUpSexp",
                 "key": "ctrl+up",
-                "mac": "ctrl+up",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.closeList",
                 "key": "ctrl+alt+right",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.rangeForDefun",
                 "key": "ctrl+alt+w space",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.sexpRangeExpansion",
                 "key": "ctrl+w",
-                "mac": "ctrl+w",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.sexpRangeContraction",
                 "key": "ctrl+shift+w",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.yankForwardSexp",
                 "key": "ctrl+alt+c ctrl+right",
-                "mac": "ctrl+alt+c ctrl+right",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.yankBackwardSexp",
                 "key": "ctrl+alt+c ctrl+left",
-                "mac": "ctrl+alt+c ctrl+left",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.yankForwardDownSexp",
                 "key": "ctrl+alt+c ctrl+down",
-                "mac": "ctrl+alt+c ctrl+down",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.yankBackwardUpSexp",
                 "key": "ctrl+alt+c ctrl+up",
-                "mac": "ctrl+alt+c ctrl+up",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.yankCloseList",
                 "key": "ctrl+alt+c ctrl+alt+right",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.yankRangeForDefun",
                 "key": "ctrl+alt+c space",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.cutForwardSexp",
                 "key": "ctrl+alt+x ccutright",
-                "mac": "ctrl+alt+x ctrl+right",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.cutBackwardSexp",
                 "key": "ctrl+alt+x ccutleft",
-                "mac": "ctrl+alt+x ctrl+left",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.cutForwardDownSexp",
                 "key": "ctrl+alt+x ccutdown",
-                "mac": "ctrl+alt+x ctrl+down",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.cutBackwardUpSexp",
                 "key": "ctrl+alt+x ccutup",
-                "mac": "ctrl+alt+x ctrl+up",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.cutCloseList",
                 "key": "ctrl+alt+x ctrl+alt+right",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.cutRangeForDefun",
                 "key": "ctrl+alt+x space",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.slurpSexpForward",
                 "key": "ctrl+alt+.",
-                "mac": "ctrl+alt+.",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.slurpSexpBackward",
                 "key": "ctrl+alt+shift+.",
-                "mac": "ctrl+alt+shift+.",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.barfSexpForward",
                 "key": "ctrl+alt+,",
-                "mac": "ctrl+alt+,",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.barfSexpBackward",
                 "key": "ctrl+alt+shift+,",
-                "mac": "ctrl+alt+shift+,",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.spliceSexp",
                 "key": "ctrl+alt+s",
-                "mac": "ctrl+alt+s",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.splitSexp",
                 "key": "ctrl+alt+/",
-                "mac": "ctrl+alt+/",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.killSexpForward",
                 "key": "ctrl+shift+backspace",
-                "mac": "cmd+shift+backspace",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.killSexpBackward",
                 "key": "ctrl+backspace",
-                "mac": "cmd+backspace",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.spliceSexpKillForward",
                 "key": "ctrl+alt+down",
-                "mac": "ctrl+alt+down",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.spliceSexpKillBackward",
                 "key": "ctrl+alt+up",
-                "mac": "ctrl+alt+up",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.wrapAroundParens",
                 "key": "ctrl+alt+shift+9",
-                "mac": "ctrl+alt+shift+9",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.wrapAroundSquare",
                 "key": "ctrl+alt+[",
-                "mac": "ctrl+alt+[",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.wrapAroundCurly",
                 "key": "ctrl+alt+shift+[",
-                "mac": "ctrl+alt+shift+[",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             },
             {
                 "command": "paredit.indentRange",
                 "key": "ctrl+alt+i",
-                "mac": "ctrl+alt+i",
-                "when": "editorTextFocus"
+                "when": "editorLangId == clojure && paredit:keyMap == legacy && editorTextFocus && !editorReadOnly"
             }
         ]
     },

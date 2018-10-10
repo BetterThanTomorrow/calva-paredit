@@ -1,7 +1,8 @@
 'use strict';
 import { StatusBar } from './status_bar';
 import * as utils from './utils';
-import { commands, window, ExtensionContext } from 'vscode';
+import { commands, window, ExtensionContext, workspace, ConfigurationChangeEvent } from 'vscode';
+
 let paredit = require('paredit.js');
 
 const languages = new Set(["clojure", "lisp", "scheme"]);
@@ -147,6 +148,12 @@ function wrapPareditCommand(fn) {
     }
 }
 
+function setKeyMapConf() {
+    let keyMap = workspace.getConfiguration().get('calva.paredit.defaultKeyMap');
+    commands.executeCommand('setContext', 'paredit:keyMap', keyMap);
+}
+setKeyMapConf();
+
 export function activate(context: ExtensionContext) {
 
     let statusBar = new StatusBar();
@@ -156,12 +163,47 @@ export function activate(context: ExtensionContext) {
         statusBar,
         commands.registerCommand('paredit.toggle', () => { enabled = !enabled; statusBar.enabled = enabled; }),
         window.onDidChangeActiveTextEditor((e) => statusBar.visible = languages.has(e.document.languageId)),
+        workspace.onDidChangeConfiguration((e: ConfigurationChangeEvent) => {
+            console.log(e);
+            if (e.affectsConfiguration('calva.paredit.defaultKeyMap')) {
+                setKeyMapConf();
+            }
+        }),
 
         ...createNavigationCopyCutCommands(navCopyCutcommands)
             .map(([command, fn]) => commands.registerCommand(command, wrapPareditCommand(fn))),
         ...pareditCommands
             .map(([command, fn]) => commands.registerCommand(command, wrapPareditCommand(fn))));
 }
+
+// static configure(context: ExtensionContext) {
+//     context.subscriptions.push(workspace.onDidChangeConfiguration(configuration.onConfigurationChanged, configuration));
+// }
+
+// private _onDidChange = new EventEmitter<ConfigurationChangeEvent>();
+// get onDidChange(): Event<ConfigurationChangeEvent> {
+//     return this._onDidChange.event;
+// }
+
+// private onConfigurationChanged(e: ConfigurationChangeEvent) {
+//     if (!e.affectsConfiguration(ExtensionKey, null!)) return;
+
+//     Container.resetConfig();
+//     if (Container.pages !== undefined) {
+//         Container.pages.refresh();
+//     }
+
+//     if (configuration.changed(e, configuration.name('defaultGravatarsStyle').value)) {
+//         clearGravatarCache();
+//     }
+
+//     const section = configuration.name('keymap').value;
+//     if (configuration.changed(e, section)) {
+//         setCommandContext(CommandContext.KeyMap, this.get<KeyMap>(section));
+//     }
+
+//     this._onDidChange.fire(e);
+// }
 
 export function deactivate() {
 }
