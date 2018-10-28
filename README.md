@@ -52,18 +52,13 @@ ctrl+alt+(         | Wrap Around ()
 ctrl+alt+[         | Wrap Around []
 ctrl+alt+{         | Wrap Around {}
 ctrl+alt+i         | Indent
----                | Transpose
-
-#### Strict mode (enabled by default)
-
-In strict mode, the backspace and delete keys won't let you remove parentheses or brackets so they become unbalanced. To force a delete anyway use these commands:
-
-Default keybinding | Action
------------------- | ------
+backspace          | Delete Backward, unless it will unbalance a form
+delete             | Delete Forward, unless it will unbalance a form
 ctrl+alt+backspace | Force Delete Backward
 ctrl+alt+delete    | Force Delete Forward
+---                | Transpose
 
-Strict mode can be switched off by by configuring `calva.paredit.defaultKeyMap` to `original` instead of `strict`.
+NB: **Strict mode is enabled by default.** The backspace and delete keys won't let you remove parentheses or brackets so they become unbalanced. To force a delete anyway, use the supplied commands for that. Strict mode can be switched off by by configuring `calva.paredit.defaultKeyMap` to `original` instead of `strict`.
 
 ### Copying/Yanking
 
