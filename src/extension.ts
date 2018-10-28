@@ -125,6 +125,8 @@ const pareditCommands: [string, Function][] = [
     ['paredit.killSexpBackward', edit(paredit.editor.killSexp, { 'backward': true })],
     ['paredit.spliceSexpKillForward', edit(paredit.editor.spliceSexpKill, { 'backward': false })],
     ['paredit.spliceSexpKillBackward', edit(paredit.editor.spliceSexpKill, { 'backward': true })],
+    ['paredit.deleteForward', edit(paredit.editor.delete, { 'backward': false })],
+    ['paredit.deleteBackward', edit(paredit.editor.delete, { 'backward': true })],
     ['paredit.wrapAroundParens', edit(paredit.editor.wrapAround, '(', ')')],
     ['paredit.wrapAroundSquare', edit(paredit.editor.wrapAround, '[', ']')],
     ['paredit.wrapAroundCurly', edit(paredit.editor.wrapAround, '{', '}')],
