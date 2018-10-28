@@ -464,6 +464,16 @@
                 "command": "paredit.deleteBackward",
                 "key": "backspace",
                 "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly"
+            },
+            {
+                "command": "deleteRight",
+                "key": "ctrl+alt+delete",
+                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly"
+            },
+            {
+                "command": "deleteLeft",
+                "key": "ctrl+alt+backspace",
+                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly"
             }
         ]
     },
