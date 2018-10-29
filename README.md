@@ -14,7 +14,7 @@ Calva Paredit can be used standalone, but also comes bundled with [Calva](https:
 
 ## Commands
 
-Note: You can choose to disable all default key bindings by configuring `calva.paredit.defaultKeyMap` to `none`. (Then you probably alos want to register your own shortcuts for the commands you often use.)
+Note: You can choose to disable all default key bindings by configuring `calva.paredit.defaultKeyMap` to `none`. (Then you probably also want to register your own shortcuts for the commands you often use.)
 
 ### Navigation
 
@@ -44,8 +44,8 @@ ctrl+alt+,         | Barf Forward
 ctrl+alt+>         | Barf Backward
 ctrl+alt+s         | Splice
 ctrl+alt+/         | Split Sexp
-cmd-delete         | Kill Sexp Forward
-cmd-backspace      | Kill Sexp Backward
+ctrl+shift+backspace | Kill Sexp Forward
+ctrl+backspace     | Kill Sexp Backward
 ctrl+alt+down      | Splice & Kill Forward
 ctrl+alt+up        | Splice & Kill Backward
 ctrl+alt+(         | Wrap Around ()
