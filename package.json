@@ -2,7 +2,7 @@
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
     "description": "Clojure structural editing and navigation",
-    "version": "0.1.19",
+    "version": "0.1.20",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
@@ -81,7 +81,7 @@
                     "calva.paredit.defaultKeyMap": {
                         "type": "string",
                         "description": "The default keymap to use for bindings when there is no custom binding.",
-                        "default": "strict",
+                        "default": "original",
                         "enum": [
                             "original",
                             "strict",
@@ -460,12 +460,12 @@
                 "command": "paredit.deleteForward",
                 "key": "delete",
                 "mac": "shift+backspace",
-                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly && !editorHasSelection"
+                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly && !editorHasSelection && !editorHasMultipleSelections"
             },
             {
                 "command": "paredit.deleteBackward",
                 "key": "backspace",
-                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly && !editorHasSelection"
+                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly && !editorHasSelection && !editorHasMultipleSelections"
             },
             {
                 "command": "deleteRight",
