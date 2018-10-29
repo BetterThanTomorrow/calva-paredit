@@ -412,7 +412,7 @@
             },
             {
                 "command": "paredit.splitSexp",
-                "key": "ctrl+alt+/",
+                "key": "ctrl+alt+shift+s",
                 "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap =~ /original|strict/ && editorTextFocus && !editorReadOnly"
             },
             {
@@ -460,12 +460,12 @@
                 "command": "paredit.deleteForward",
                 "key": "delete",
                 "mac": "shift+backspace",
-                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly"
+                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly && !editorHasSelection"
             },
             {
                 "command": "paredit.deleteBackward",
                 "key": "backspace",
-                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly"
+                "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly && !editorHasSelection"
             },
             {
                 "command": "deleteRight",
@@ -487,7 +487,7 @@
     },
     "dependencies": {
         "clipboardy": "^1.2.3",
-        "paredit.js": "^0.3.3"
+        "paredit.js": "^0.3.4"
     },
     "devDependencies": {
         "@types/mocha": "^5.2.5",

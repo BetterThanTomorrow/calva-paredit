@@ -43,7 +43,7 @@ ctrl+alt+<                        | Slurp Backward
 ctrl+alt+,                        | Barf Forward
 ctrl+alt+>                        | Barf Backward
 ctrl+alt+s                        | Splice
-ctrl+alt+/                        | Split Sexp
+ctrl+alt+shift+s                  | Split Sexp
 ctrl+delete                       | Kill Sexp Forward
 ctrl+shift+backspace (on Mac)     | Kill Sexp Forward
 ctrl+backspace                    | Kill Sexp Backward
