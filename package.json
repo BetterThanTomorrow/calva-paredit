@@ -2,7 +2,7 @@
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
     "description": "Clojure structural editing and navigation",
-    "version": "0.1.17",
+    "version": "0.1.18",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",
@@ -417,7 +417,8 @@
             },
             {
                 "command": "paredit.killSexpForward",
-                "key": "ctrl+shift+backspace",
+                "key": "ctrl+delete",
+                "mac": "ctrl+shift+backspace",
                 "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap =~ /original|strict/ && editorTextFocus && !editorReadOnly"
             },
             {
@@ -458,6 +459,7 @@
             {
                 "command": "paredit.deleteForward",
                 "key": "delete",
+                "mac": "shift+backspace",
                 "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly"
             },
             {
@@ -468,6 +470,7 @@
             {
                 "command": "deleteRight",
                 "key": "ctrl+alt+delete",
+                "mac": "alt+shift+backspace",
                 "when": "editorLangId =~ /clojure|scheme|lisp/ && paredit:keyMap == strict && editorTextFocus && !editorReadOnly"
             },
             {

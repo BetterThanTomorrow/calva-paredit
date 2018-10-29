@@ -36,27 +36,30 @@ ctrl+alt+w space   | Select Current Top Level Form
 
 ### Editing
 
-Default keybinding | Action
------------------- | ------
-ctrl+alt+.         | Slurp Forward
-ctrl+alt+<         | Slurp Backward
-ctrl+alt+,         | Barf Forward
-ctrl+alt+>         | Barf Backward
-ctrl+alt+s         | Splice
-ctrl+alt+/         | Split Sexp
-ctrl+shift+backspace | Kill Sexp Forward
-ctrl+backspace     | Kill Sexp Backward
-ctrl+alt+down      | Splice & Kill Forward
-ctrl+alt+up        | Splice & Kill Backward
-ctrl+alt+(         | Wrap Around ()
-ctrl+alt+[         | Wrap Around []
-ctrl+alt+{         | Wrap Around {}
-ctrl+alt+i         | Indent
-backspace          | Delete Backward, unless it will unbalance a form
-delete             | Delete Forward, unless it will unbalance a form
-ctrl+alt+backspace | Force Delete Backward
-ctrl+alt+delete    | Force Delete Forward
----                | Transpose
+Default keybinding                | Action
+------------------                | ------
+ctrl+alt+.                        | Slurp Forward
+ctrl+alt+<                        | Slurp Backward
+ctrl+alt+,                        | Barf Forward
+ctrl+alt+>                        | Barf Backward
+ctrl+alt+s                        | Splice
+ctrl+alt+/                        | Split Sexp
+ctrl+delete                       | Kill Sexp Forward
+ctrl+shift+backspace (on Mac)     | Kill Sexp Forward
+ctrl+backspace                    | Kill Sexp Backward
+ctrl+alt+down                     | Splice & Kill Forward
+ctrl+alt+up                       | Splice & Kill Backward
+ctrl+alt+(                        | Wrap Around ()
+ctrl+alt+[                        | Wrap Around []
+ctrl+alt+{                        | Wrap Around {}
+ctrl+alt+i                        | Indent
+backspace                         | Delete Backward, unless it will unbalance a form
+delete                            | Delete Forward, unless it will unbalance a form
+shift+backspace (on Mac)          | Delete Forward, unless it will unbalance a form
+ctrl+alt+backspace                | Force Delete Backward
+ctrl+alt+delete                   | Force Delete Forward
+alt+shift+backspace (on Mac)      | Force Delete Forward
+---                               | Transpose
 
 NB: **Strict mode is enabled by default.** The backspace and delete keys won't let you remove parentheses or brackets so they become unbalanced. To force a delete anyway, use the supplied commands for that. Strict mode can be switched off by by configuring `calva.paredit.defaultKeyMap` to `original` instead of `strict`.
 
