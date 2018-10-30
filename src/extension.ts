@@ -86,7 +86,6 @@ const edit = (fn, ...args) =>
 const editWithEndIdx = (fn, args) =>
     ({ textEditor, src, ast, selection }) => {
         let res = fn(ast, src, selection.start, { ...args, endIdx: selection.end });
-        console.log("RES", res);
         if (res)
             if (res.changes.length > 0) {
                 let cmd = utils.commands(res),
