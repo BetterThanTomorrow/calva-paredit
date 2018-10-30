@@ -83,6 +83,31 @@ const edit = (fn, ...args) =>
                 utils.select(textEditor, res.newIndex);
     }
 
+const editWithEndIdx = (fn, args) =>
+    ({ textEditor, src, ast, selection }) => {
+        let res = fn(ast, src, selection.start, { ...args, endIdx: selection.end });
+        console.log("RES", res);
+        if (res)
+            if (res.changes.length > 0) {
+                let cmd = utils.commands(res),
+                    sel = {
+                        start: Math.min(...cmd.map(c => c.start)),
+                        end: Math.max(...cmd.map(utils.end))
+                    };
+
+                utils
+                    .edit(textEditor, cmd)
+                    .then((applied?) => {
+                        utils.select(textEditor, res.newIndex);
+                        indent({
+                            textEditor: textEditor,
+                            selection: sel
+                        })
+                    });
+            }
+            else
+                utils.select(textEditor, res.newIndex);
+    }
 
 const createNavigationCopyCutCommands = (commands) => {
     const capitalizeFirstLetter = (s) => { return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -125,8 +150,8 @@ const pareditCommands: [string, Function][] = [
     ['paredit.killSexpBackward', edit(paredit.editor.killSexp, { 'backward': true })],
     ['paredit.spliceSexpKillForward', edit(paredit.editor.spliceSexpKill, { 'backward': false })],
     ['paredit.spliceSexpKillBackward', edit(paredit.editor.spliceSexpKill, { 'backward': true })],
-    ['paredit.deleteForward', edit(paredit.editor.delete, { 'backward': false })],
-    ['paredit.deleteBackward', edit(paredit.editor.delete, { 'backward': true })],
+    ['paredit.deleteForward', editWithEndIdx(paredit.editor.delete, { 'backward': false })],
+    ['paredit.deleteBackward', editWithEndIdx(paredit.editor.delete, { 'backward': true })],
     ['paredit.wrapAroundParens', edit(paredit.editor.wrapAround, '(', ')')],
     ['paredit.wrapAroundSquare', edit(paredit.editor.wrapAround, '[', ']')],
     ['paredit.wrapAroundCurly', edit(paredit.editor.wrapAround, '{', '}')],
