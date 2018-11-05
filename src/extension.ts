@@ -57,35 +57,13 @@ function indent({ textEditor, selection }) {
         .then((applied?) => utils.undoStop(textEditor));
 }
 
-const edit = (fn, ...args) =>
+const wrapAround = (ast, src, start, { opening, closing }) => paredit.editor.wrapAround(ast, src, start, opening, closing);
+
+const edit = (fn, opts = {}) =>
     ({ textEditor, src, ast, selection }) => {
-        let res = fn(ast, src, selection.cursor, ...args);
+        let { start, end } = selection;
+        let res = fn(ast, src, selection.start, { ...opts, endIdx: start === end ? undefined : end });
 
-        if (res)
-            if (res.changes.length > 0) {
-                let cmd = utils.commands(res),
-                    sel = {
-                        start: Math.min(...cmd.map(c => c.start)),
-                        end: Math.max(...cmd.map(utils.end))
-                    };
-
-                utils
-                    .edit(textEditor, cmd)
-                    .then((applied?) => {
-                        utils.select(textEditor, res.newIndex);
-                        indent({
-                            textEditor: textEditor,
-                            selection: sel
-                        })
-                    });
-            }
-            else
-                utils.select(textEditor, res.newIndex);
-    }
-
-const editWithEndIdx = (fn, args) =>
-    ({ textEditor, src, ast, selection }) => {
-        let res = fn(ast, src, selection.start, { ...args, endIdx: selection.end });
         if (res)
             if (res.changes.length > 0) {
                 let cmd = utils.commands(res),
@@ -149,11 +127,11 @@ const pareditCommands: [string, Function][] = [
     ['paredit.killSexpBackward', edit(paredit.editor.killSexp, { 'backward': true })],
     ['paredit.spliceSexpKillForward', edit(paredit.editor.spliceSexpKill, { 'backward': false })],
     ['paredit.spliceSexpKillBackward', edit(paredit.editor.spliceSexpKill, { 'backward': true })],
-    ['paredit.deleteForward', editWithEndIdx(paredit.editor.delete, { 'backward': false })],
-    ['paredit.deleteBackward', editWithEndIdx(paredit.editor.delete, { 'backward': true })],
-    ['paredit.wrapAroundParens', edit(paredit.editor.wrapAround, '(', ')')],
-    ['paredit.wrapAroundSquare', edit(paredit.editor.wrapAround, '[', ']')],
-    ['paredit.wrapAroundCurly', edit(paredit.editor.wrapAround, '{', '}')],
+    ['paredit.deleteForward', edit(paredit.editor.delete, { 'backward': false })],
+    ['paredit.deleteBackward', edit(paredit.editor.delete, { 'backward': true })],
+    ['paredit.wrapAroundParens', edit(wrapAround, { opening: '(', closing: ')' })],
+    ['paredit.wrapAroundSquare', edit(wrapAround, { opening: '[', closing: ']' })],
+    ['paredit.wrapAroundCurly', edit(wrapAround, { opening: '{', closing: '}' })],
     ['paredit.indentRange', indent],
     ['paredit.transpose', edit(paredit.editor.transpose)]];
 
