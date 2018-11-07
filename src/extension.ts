@@ -182,34 +182,5 @@ export function activate(context: ExtensionContext) {
             .map(([command, fn]) => commands.registerCommand(command, wrapPareditCommand(fn))));
 }
 
-// static configure(context: ExtensionContext) {
-//     context.subscriptions.push(workspace.onDidChangeConfiguration(configuration.onConfigurationChanged, configuration));
-// }
-
-// private _onDidChange = new EventEmitter<ConfigurationChangeEvent>();
-// get onDidChange(): Event<ConfigurationChangeEvent> {
-//     return this._onDidChange.event;
-// }
-
-// private onConfigurationChanged(e: ConfigurationChangeEvent) {
-//     if (!e.affectsConfiguration(ExtensionKey, null!)) return;
-
-//     Container.resetConfig();
-//     if (Container.pages !== undefined) {
-//         Container.pages.refresh();
-//     }
-
-//     if (configuration.changed(e, configuration.name('defaultGravatarsStyle').value)) {
-//         clearGravatarCache();
-//     }
-
-//     const section = configuration.name('keymap').value;
-//     if (configuration.changed(e, section)) {
-//         setCommandContext(CommandContext.KeyMap, this.get<KeyMap>(section));
-//     }
-
-//     this._onDidChange.fire(e);
-// }
-
 export function deactivate() {
 }
