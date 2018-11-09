@@ -166,7 +166,7 @@
             {
                 "category": "Paredit",
                 "command": "paredit.yankRangeForDefun",
-                "title": "Copy Select Current Top Level Form"
+                "title": "Copy Current Top Level Form"
             },
             {
                 "category": "Paredit",
