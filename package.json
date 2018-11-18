@@ -2,7 +2,7 @@
     "name": "paredit-revived",
     "displayName": "Calva Paredit",
     "description": "Clojure structural editing and navigation",
-    "version": "0.1.20",
+    "version": "0.1.21",
     "icon": "assets/paredit.png",
     "publisher": "cospaia",
     "license": "MIT",

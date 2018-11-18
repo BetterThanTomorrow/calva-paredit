@@ -168,7 +168,7 @@ export function activate(context: ExtensionContext) {
 
         statusBar,
         commands.registerCommand('paredit.toggle', () => { enabled = !enabled; statusBar.enabled = enabled; }),
-        window.onDidChangeActiveTextEditor((e) => statusBar.visible = languages.has(e.document.languageId)),
+        window.onDidChangeActiveTextEditor((e) => statusBar.visible = e && e.document && languages.has(e.document.languageId)),
         workspace.onDidChangeConfiguration((e: ConfigurationChangeEvent) => {
             console.log(e);
             if (e.affectsConfiguration('calva.paredit.defaultKeyMap')) {
