@@ -10,7 +10,7 @@ This is a [Paredit](http://mumble.net/~campbell/emacs/paredit.el) extension for 
 
 ## Part of Calva
 
-Calva Paredit can be used standalone, but also comes bundled with [Calva](https://marketplace.visualstudio.com/items?itemName=cospaia.clojure4vscode), together with [Calva Formatter](https://marketplace.visualstudio.com/items?itemName=cospaia.calva-fmt).
+Calva Paredit can be used standalone, but also comes bundled with [Calva](https://marketplace.visualstudio.com/items?itemName=cospaia.clojure4vscode), a Clojure and ClojureScript extension for bringing the REPL power into VS Code, together with [Calva Formatter](https://marketplace.visualstudio.com/items?itemName=cospaia.calva-fmt), a Clojure code formatter.
 
 ## Commands
 
@@ -53,17 +53,19 @@ ctrl+alt+(                        | Wrap Around ()
 ctrl+alt+[                        | Wrap Around []
 ctrl+alt+{                        | Wrap Around {}
 ctrl+alt+i                        | Indent
+---                               | Transpose
+
+Strict mode keybinding            | Action
+----------------------            | ------
 backspace                         | Delete Backward, unless it will unbalance a form
 delete                            | Delete Forward, unless it will unbalance a form
 shift+backspace (on Mac)          | Delete Forward, unless it will unbalance a form
 ctrl+alt+backspace                | Force Delete Backward
 ctrl+alt+delete                   | Force Delete Forward
 alt+shift+backspace (on Mac)      | Force Delete Forward
----                               | Transpose
 
-NB: **Strict mode is enabled by default.** The backspace and delete keys won't let you remove parentheses or brackets so they become unbalanced. To force a delete anyway, use the supplied commands for that. Strict mode can be switched off by by configuring `calva.paredit.defaultKeyMap` to `original` instead of `strict`.
+NB: **Strict mode is disabled by default.** If you ensable it, the backspace and delete keys won't let you remove parentheses or brackets so they become unbalanced. To force a delete anyway, use the supplied commands for that. Strict mode can be switched on by by configuring `calva.paredit.defaultKeyMap` to `strict`.
 
-(Actuallym currently **strict** mode is not enabled by default. There are [some issues](https://github.com/BetterThanTomorrow/calva-paredit/issues/14) with it that needs to be ironed out first. But please help with testing by enabling it.)
 
 ### Copying/Yanking
 
