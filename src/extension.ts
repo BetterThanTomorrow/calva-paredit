@@ -9,6 +9,8 @@ const languages = new Set(["clojure", "lisp", "scheme"]);
 let enabled = true,
     expandState = { range: null, prev: null };
 
+commands.executeCommand('setContext', 'paredit:enabled', enabled);
+
 const navigate = (fn, ...args) =>
     ({ textEditor, ast, selection }) => {
         let res = fn(ast, selection.cursor, ...args);
@@ -167,7 +169,10 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
 
         statusBar,
-        commands.registerCommand('paredit.toggle', () => { enabled = !enabled; statusBar.enabled = enabled; }),
+        commands.registerCommand('paredit.toggle', () => { enabled = !enabled; 
+                                                          statusBar.enabled = enabled; 
+                                                          commands.executeCommand('setContext', 'paredit:enabled', enabled);
+                                                         }),
         window.onDidChangeActiveTextEditor((e) => statusBar.visible = e && e.document && languages.has(e.document.languageId)),
         workspace.onDidChangeConfiguration((e: ConfigurationChangeEvent) => {
             console.log(e);
